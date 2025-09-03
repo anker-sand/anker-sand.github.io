@@ -1,7 +1,7 @@
 export default function Projects() {
   return (
     <section>
-      <p>hej</p>
+      <p>hej projects</p>
     </section>
   );
 }
