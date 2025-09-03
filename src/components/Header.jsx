@@ -1,3 +1,5 @@
-export default function Header() {
-  return <header className="header">Mit Portfolio</header>;
+import styles from "./Header.module.css";
+
+function Header() {
+  return <header className={styles.header}>Mit Portfolio</header>;
 }
