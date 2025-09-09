@@ -1,0 +1,36 @@
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.nav-icon {
+  cursor: pointer;
+  color: rgb(0, 0, 0);
+}
+
+.nav-menu {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.nav-menu button {
+  background: none;
+  border: none;
+  color: rgb(0, 0, 0);
+  text-align: left;
+  padding: 0.25rem 0;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.nav-menu button:hover {
+  color: #00d1b2;
+}
