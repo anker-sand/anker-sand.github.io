@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./pages/Home";
 import About from "./pages/About";
-import Projects from "./pages/Projects";
+import Projects from "./pages/projects";
 import "./main.css";
 
 export default function App() {
