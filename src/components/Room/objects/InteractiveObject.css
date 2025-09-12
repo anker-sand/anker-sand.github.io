@@ -1,0 +1,26 @@
+.interactive-object {
+  transition: filter 0.2s ease;
+  cursor: pointer;
+  z-index: 10; /* makes it clickable */
+}
+
+.interactive-object:hover {
+  filter: brightness(1) drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
+}
+
+.tooltip {
+  position: fixed;
+  background: rgba(56, 40, 40, 0.9);
+  color: #e7deab;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: "Inter", sans-serif;
+  letter-spacing: 0.5px;
+  pointer-events: none;
+  z-index: 9999;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: opacity 0.15s ease;
+}
