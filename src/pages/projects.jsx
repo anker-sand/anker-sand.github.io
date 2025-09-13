@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import "./Projects.css";
-import cubePng from "../assets/images/projects/projectcube.png"; // ✅ still bundled PNG
+import cubePng from "../assets/images/projects/projectcube.png";
 
 export default function Projects() {
   const [projectsData, setProjectsData] = useState([]);
   const [activeId, setActiveId] = useState(null);
   const [imgIndex, setImgIndex] = useState(0);
+  const [prevImgIndex, setPrevImgIndex] = useState(0);
+  const [isFading, setIsFading] = useState(false);
 
-  // Fetch projects.json from public/
   useEffect(() => {
     fetch("/projects.json")
       .then((res) => res.json())
       .then((data) => {
         setProjectsData(data);
-        setActiveId(data[0]?.id); // default to first project
+        setActiveId(data[0]?.id);
       })
       .catch((err) => console.error("Failed to load projects.json", err));
   }, []);
@@ -29,68 +30,97 @@ export default function Projects() {
   }
 
   const total = activeProject.images.length;
-  const prev = () => setImgIndex((i) => (i - 1 + total) % total);
-  const next = () => setImgIndex((i) => (i + 1) % total);
+
+  const prev = () => {
+    setPrevImgIndex(imgIndex);
+    setIsFading(true);
+    setTimeout(() => {
+      setImgIndex((i) => (i - 1 + total) % total);
+      setIsFading(false);
+    }, 500);
+  };
+
+  const next = () => {
+    setPrevImgIndex(imgIndex);
+    setIsFading(true);
+    setTimeout(() => {
+      setImgIndex((i) => (i + 1) % total);
+      setIsFading(false);
+    }, 500);
+  };
 
   return (
     <div className="projects-page">
-      {/* LEFT: list */}
-      <motion.aside
-        className="proj-list"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, transition: { delay: 0.15 } }}
-      >
+      {/* LEFT: title and list */}
+      <aside>
         <h1 className="proj-title">projects</h1>
-        <ul>
-          {projectsData.map((p) => (
-            <li key={p.id}>
-              <button
-                className={p.id === activeId ? "proj-item active" : "proj-item"}
-                onClick={() => setActiveId(p.id)}
-              >
-                {p.title}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </motion.aside>
+        <motion.div
+          className="proj-list"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, transition: { delay: 0.15 } }}
+        >
+          <ul>
+            {projectsData.map((p) => (
+              <li key={p.id}>
+                <button
+                  className={
+                    p.id === activeId ? "proj-item active" : "proj-item"
+                  }
+                  onClick={() => setActiveId(p.id)}
+                >
+                  {p.title}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </motion.div>
+      </aside>
 
       {/* RIGHT: showcase + cube */}
       <div className="proj-right">
-        {/* Showcase */}
+        {/* Showcase with arrows outside the frame */}
         <motion.div
           className="showcase"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, transition: { delay: 0.25 } }}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
         >
+          <button
+            className="arrow outside left"
+            onClick={prev}
+            aria-label="Previous"
+            style={{ marginRight: "24px" }}
+          >
+            ‹
+          </button>
           <div className="showcase-frame">
+            {/* Previous image fades out, new image fades in */}
             <img
-              src={activeProject.images[imgIndex]} // ✅ served from /public/assets/projects/
-              alt={`${activeProject.title} screenshot ${imgIndex + 1}`}
-              className="showcase-image"
+              src={activeProject.images[prevImgIndex]}
+              alt=""
+              className={`showcase-image${isFading ? "" : " hide"}`}
+              draggable={false}
+              aria-hidden="true"
+            />
+            <img
+              src={activeProject.images[imgIndex]}
+              alt={`${activeProject.title} screenshot`}
+              className={`showcase-image${isFading ? " hide" : ""}`}
               draggable={false}
             />
-            <button className="arrow left" onClick={prev} aria-label="Previous">
-              ‹
-            </button>
-            <button className="arrow right" onClick={next} aria-label="Next">
-              ›
-            </button>
           </div>
-
-          {/* Thumbnails */}
-          <div className="thumbs">
-            {activeProject.images.map((src, i) => (
-              <button
-                key={src}
-                className={i === imgIndex ? "thumb active" : "thumb"}
-                onClick={() => setImgIndex(i)}
-                aria-label={`Go to image ${i + 1}`}
-              >
-                <img src={src} alt="" />
-              </button>
-            ))}
-          </div>
+          <button
+            className="arrow outside right"
+            onClick={next}
+            aria-label="Next"
+            style={{ marginLeft: "24px" }}
+          >
+            ›
+          </button>
         </motion.div>
 
         {/* Cube with overlay text */}

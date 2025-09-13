@@ -1,6 +1,6 @@
 .projects-page {
   display: grid;
-  grid-template-columns: 320px 1fr;
+  grid-template-columns: 420px 1fr; /* Increased left column width */
   gap: 48px;
   padding: 64px clamp(24px, 4vw, 64px);
   align-items: start;
@@ -11,18 +11,36 @@
 
 /* ---------- LEFT LIST ---------- */
 .proj-title {
-  margin: 0 0 20px 0;
-  font-size: clamp(40px, 5vw, 72px);
+  margin: 60px 0 52px 50px; /* Increased bottom margin for more space below the title */
+  font-size: clamp(64px, 8vw, 140px);
   line-height: 1;
   color: #d9a669;
+  text-shadow: 1px 1px 2px #be1414, 0 1px 0 #b48a4a;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.proj-list {
+  margin-left: 50px;
+  background: rgba(40, 40, 50, 0.32);
+  backdrop-filter: blur(8px) saturate(1.2);
+  -webkit-backdrop-filter: blur(8px) saturate(1.2);
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+  padding: 24px 18px;
+  margin-top: 0;
+  width: 100%; /* Expand to fill the wider column */
+  box-sizing: border-box;
 }
 
 .proj-list ul {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 5px;
   display: grid;
-  gap: 8px;
+  gap: 0;
+  /* The glass effect is only on the .proj-list container, not the title */
 }
 
 .proj-item {
@@ -31,7 +49,7 @@
   padding: 12px 14px;
   border: 0;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 36px;
   background: rgba(217, 166, 105, 0.18);
   color: #dcd4c1;
   transition: background 0.2s ease, transform 0.1s ease;
@@ -50,23 +68,38 @@
   flex-direction: column; /* stack showcase and cube vertically */
   gap: 40px;
   align-items: center; /* center them horizontally */
+  margin-top: 40px; /* ⬅️ Pushes the showcase, thumbs, and cube down */
 }
 
-/* Showcase */
+/* Showcase with outside arrows */
 .showcase {
-  display: grid;
-  gap: 14px;
-  align-content: start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-left: 295px;
+  position: relative;
+  z-index: 5;
+  perspective: 600px;
+  perspective-origin: left top;
 }
 
 .showcase-frame {
   position: relative;
-  z-index: 3; /* higher than cube */
-  width: min(560px, 60vw);
+  overflow: hidden;
+
+  /* Apply similar 3D transform as the cube face */
+  transform: perspective(600px) rotateY(-0.6deg) skewY(1.5deg);
+  transform-origin: left top;
+  position: relative;
+  z-index: 6; /* higher than cube */
+  width: min(30vw);
   aspect-ratio: 16 / 9;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  left: 1%;
+  background: #181a1f;
 }
 
 .showcase-image {
@@ -75,10 +108,41 @@
   object-fit: cover;
   user-select: none;
   pointer-events: none;
+  /* Smooth fade transition */
+  opacity: 1;
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
-/* Arrows */
-.arrow {
+.showcase-image.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Outside Arrows */
+.arrow.outside {
+  position: static;
+  font-size: 8rem; /* Increased from 2.8rem to 4rem */
+  background: none;
+  border: none;
+  color: #d9a669;
+  cursor: pointer;
+  transition: color 0.2s, transform 0.2s;
+  user-select: none;
+  padding: 0 24px; /* Slightly more padding for larger arrows */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.arrow.outside:hover {
+  color: #fffbe6;
+  transform: scale(1.15);
+}
+
+/* Remove old absolute arrow styles if not used anymore */
+.arrow:not(.outside) {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -95,44 +159,17 @@
   place-items: center;
   transition: background 0.15s ease, transform 0.1s ease;
 }
-.arrow:hover {
+.arrow:not(.outside):hover {
   background: rgba(0, 0, 0, 0.6);
 }
-.arrow:active {
+.arrow:not(.outside):active {
   transform: scale(0.95);
 }
-.arrow.left {
+.arrow.left:not(.outside) {
   left: 8px;
 }
-.arrow.right {
+.arrow.right:not(.outside) {
   right: 8px;
-}
-
-/* Thumbnails */
-.thumbs {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-.thumbs .thumb {
-  width: 56px;
-  height: 40px;
-  padding: 0;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-  overflow: hidden;
-  background: rgba(0, 0, 0, 0.25);
-  cursor: pointer;
-}
-.thumbs .thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.thumbs .thumb.active {
-  outline: 2px solid #d9a669;
-  outline-offset: 2px;
 }
 
 /* ---------- CUBE ---------- */
@@ -140,17 +177,17 @@
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  margin-top: -60px; /* ⬅ negative margin pulls cube upward */
+  margin-top: 0; /* ⬅ positive margin pulls cube downward */
 }
 .cube {
   position: relative;
-  width: 550px; /* ⬅ make cube larger */
+  width: 500px; /* ⬅ make cube larger */
   height: auto;
   margin-left: 90px; /* ⬅ shift cube to the right */
 }
 
 .cube-image {
-  width: 100%;
+  width: 150%;
   height: auto;
   display: block;
 }
@@ -158,32 +195,37 @@
 /* Text face overlay */
 .cube-face-warp {
   position: absolute;
-  top: 25%; /* adjust until it matches cube face */
+  top: 5%;
   left: 12%;
-  width: 70%; /* text area width */
-  height: 60%; /* text area height */
+  width: 70%;
+  height: 60%;
   padding: 16px;
   color: #2a2520;
-
-  /* no warp or clipping, just natural text */
   background: transparent;
+
+  /* Perspective and skew to match the cube face */
+  transform: perspective(600px) rotateY(-0.6deg) skewY(3deg);
+  /* Adjust the values above to best match your cube image's angle */
+  transform-origin: left top;
+  pointer-events: none; /* Prevent accidental selection */
 }
 
 .cube-h2 {
   margin: 0 0 6px 0;
-  font-size: 22px;
-  color: #c6955b;
+  font-size: 52px;
+  color: #6e3e22;
+  font-family: jetbrains-mono, monospace;
 }
 .cube-sub {
   margin: 0 0 12px 0;
-  font-size: 12px;
+  font-size: 28px;
   letter-spacing: 0.2px;
   opacity: 0.8;
   font-style: italic;
 }
 .cube-desc,
 .cube-credits {
-  font-size: 14px;
+  font-size: 24px;
   line-height: 1.4;
   margin: 0 0 10px 0;
 }
