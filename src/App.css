@@ -1,0 +1,26 @@
+body {
+  cursor: none; /* hide default cursor */
+}
+
+.cursor,
+.cursor-follower {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+
+.cursor {
+  width: 10px;
+  height: 10px;
+  background: black;
+}
+
+.cursor-follower {
+  width: 40px;
+  height: 40px;
+  border: 2px solid black;
+}

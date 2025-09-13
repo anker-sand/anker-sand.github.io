@@ -11,7 +11,7 @@
 
 .nav-icon {
   cursor: pointer;
-  color: #be8f5c;
+  color: rgb(236, 168, 21);
 }
 
 .nav-menu {
@@ -19,16 +19,20 @@
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.1));
 }
 
 .nav-menu button {
   background: none;
+  color: rgb(236, 168, 21);
   border: none;
-  color: rgb(235, 204, 103);
   text-align: left;
   padding: 0.25rem 0;
   cursor: pointer;
-  font-size: 3rem;
+  font-size: 4rem;
+  font-family: "jetbrains mono", monospace;
+  font-weight: 800;
+  -webkit-text-stroke: 1px rgb(29, 28, 28);
 }
 
 .nav-menu button:hover {

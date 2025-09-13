@@ -1,0 +1,22 @@
+[
+  {
+    "id": "cille-cyklus",
+    "title": "Cille cyklus",
+    "subtitle": "Interactive menstrual cycle",
+    "description": "Go on a journey with Cille Cyklus as you explore the inner aspects of womanhood.",
+    "credits": "Made in cooperation with Steno Museum in Denmark.",
+    "images": [
+      "/assets/projects/cille_1.png",
+      "/assets/projects/cille_2.png",
+      "/assets/projects/cille_3.png"
+    ]
+  },
+  {
+    "id": "radar-live",
+    "title": "radar_live",
+    "subtitle": "Live performance visuals",
+    "description": "Generative visuals driven by audio input for club environments.",
+    "credits": "Custom shaders, audio-reactive pipelines.",
+    "images": ["/assets/projects/radar_1.jpg", "/assets/projects/radar_2.jpg"]
+  }
+]

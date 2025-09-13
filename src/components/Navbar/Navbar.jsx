@@ -13,7 +13,7 @@ export default function Navbar({ onNavigate }) {
       onMouseLeave={() => setIsOpen(false)}
     >
       {/* House Icon */}
-      <Home size={60} className="nav-icon" onClick={() => onNavigate("home")} />
+      <Home size={80} className="nav-icon" onClick={() => onNavigate("home")} />
 
       {/* Hover menu */}
       <AnimatePresence>
