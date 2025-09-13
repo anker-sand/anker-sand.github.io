@@ -13,16 +13,17 @@ export default function Navbar({ onNavigate }) {
       onMouseLeave={() => setIsOpen(false)}
     >
       {/* House Icon */}
-      <Home size={32} className="nav-icon" onClick={() => onNavigate("home")} />
+      <Home size={60} className="nav-icon" onClick={() => onNavigate("home")} />
 
       {/* Hover menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
             className="nav-menu"
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -10 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
           >
             <button onClick={() => onNavigate("home")}>Home</button>
             <button onClick={() => onNavigate("about")}>About Me</button>

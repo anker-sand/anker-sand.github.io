@@ -14,6 +14,7 @@ export default function Home({ onNavigate }) {
         <img src={roomBase} className="room-base" />
         <img src={desk} className="desk" />
 
+        {/* About me chair */}
         <InteractiveObject
           image={meinchair}
           className="meinchair"
@@ -21,7 +22,14 @@ export default function Home({ onNavigate }) {
           onClick={() => onNavigate("about")}
         />
 
-        <img src={projectwall} className="projectwall" />
+        {/* Projects wall */}
+        <InteractiveObject
+          image={projectwall}
+          className="projectwall"
+          tooltipText="Projects"
+          onClick={() => onNavigate("projects")}
+        />
+
         <img src={door} className="door" />
         <img src={mail} className="mail" />
       </div>

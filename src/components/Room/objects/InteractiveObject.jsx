@@ -36,9 +36,9 @@ export default function InteractiveObject({
         <div
           className="tooltip"
           style={{
-            position: "fixed", // ensure fixed, not relative
-            top: tooltip.y + 20,
-            left: tooltip.x + 20,
+            position: "fixed",
+            top: tooltip.y + 20, // closer vertically
+            left: tooltip.x + 20, // closer horizontally
           }}
         >
           {tooltipText}

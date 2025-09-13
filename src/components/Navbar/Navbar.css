@@ -11,7 +11,7 @@
 
 .nav-icon {
   cursor: pointer;
-  color: rgb(0, 0, 0);
+  color: #be8f5c;
 }
 
 .nav-menu {
@@ -24,13 +24,13 @@
 .nav-menu button {
   background: none;
   border: none;
-  color: rgb(0, 0, 0);
+  color: rgb(235, 204, 103);
   text-align: left;
   padding: 0.25rem 0;
   cursor: pointer;
-  font-size: 2rem;
+  font-size: 3rem;
 }
 
 .nav-menu button:hover {
-  color: #00d1b2;
+  color: #be8f5c;
 }
