@@ -23,7 +23,7 @@
   position: relative;
   height: 130vh; /* 30% taller than screen */
   aspect-ratio: 16 / 9;
-  bottom: 30%;
+  bottom: 27%;
 }
 
 .room-base {
