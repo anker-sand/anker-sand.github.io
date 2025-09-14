@@ -80,11 +80,7 @@ export default function Projects() {
   }, [showInlineShowcase, activeProject]);
 
   if (!activeProject) {
-    return (
-      <div className="projects-page">
-        <div>Loading projects...</div>
-      </div>
-    );
+    return <div className="projects-page"></div>;
   }
 
   const total = activeProject.images?.length || 0;
@@ -106,11 +102,11 @@ export default function Projects() {
 
   /* ---------- Variants ---------- */
   const titleAndListVariants = {
-    initial: { opacity: 0, y: 20 },
+    initial: { opacity: 0, y: 14 }, // was y:20
     animate: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.55, ease: [0.33, 0.11, 0.22, 1] },
+      transition: { duration: 0.42, ease: [0.33, 0.11, 0.22, 1] }, // slightly shorter
     },
   };
 
@@ -124,12 +120,12 @@ export default function Projects() {
   };
 
   const cubeRiseVariants = {
-    initial: { opacity: 0, y: 180 },
+    initial: { opacity: 0, y: 1080 },
     animate: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.85,
+        duration: 1,
         ease: [0.22, 0.72, 0.18, 1.02],
         delay: 0.05,
       },

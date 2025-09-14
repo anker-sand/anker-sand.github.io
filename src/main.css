@@ -15,8 +15,8 @@ html,
 .app-container {
   position: relative;
   width: 100%;
-  min-height: 100vh; /* instead of fixed height */
-  overflow: visible; /* allow oversized children */
+  min-height: 100vh;
+  overflow: visible;
 }
 
 /* Page styling */
@@ -39,4 +39,28 @@ html,
   height: 100%;
   object-fit: cover;
   z-index: -1; /* always behind everything */
+}
+
+/* Hide native scrollbar globally (still scrollable) */
+html {
+  scrollbar-width: none; /* Firefox */
+}
+html,
+body {
+  -ms-overflow-style: none; /* IE/old Edge */
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* Utility: apply to any custom scroll area if added later */
+.scrollbar-hidden {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-hidden::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }

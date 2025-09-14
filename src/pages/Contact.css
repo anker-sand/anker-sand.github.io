@@ -1,15 +1,18 @@
 .contact-page {
+  /* WAS: display:flex; justify-content:center; */
+  align-self: flex-start; /* override parent flex centering */
   width: 100%;
-  padding: clamp(32px, 6vw, 80px) clamp(24px, 5vw, 120px);
   box-sizing: border-box;
-  display: flex;
-  justify-content: center;
+  padding: 140px clamp(24px, 5vw, 120px) 80px; /* top spacing similar to Projects/Home */
+  min-height: 100vh; /* stabilize height => no jump if previous page was taller */
+  display: block; /* simpler flow */
   color: #2d241e;
   font-family: "Inter", system-ui, sans-serif;
 }
 
 .contact-inner {
   max-width: 720px;
+  margin: 0 auto;
   width: 100%;
   background: rgba(245, 235, 210, 0.55);
   backdrop-filter: blur(5px) saturate(1.05);
@@ -18,12 +21,14 @@
   border-radius: 14px;
   padding: clamp(24px, 3.2vw, 44px);
   box-shadow: 0 6px 28px -10px rgba(40, 25, 15, 0.22);
+  will-change: opacity; /* hint for page fade */
 }
 
+/* (Optional) slightly smaller heading so top spacing feels balanced */
 .contact-title {
   margin: 0 0 10px;
-  font-size: clamp(2.2rem, 5vw, 3.2rem);
-  line-height: 1.02;
+  font-size: clamp(2rem, 4.4vw, 3rem);
+  line-height: 1.05;
   font-family: jetbrains-mono, ui-monospace, monospace;
   color: #5a3417;
   letter-spacing: 0.5px;
@@ -158,11 +163,14 @@
 }
 
 @media (max-width: 780px) {
+  .contact-page {
+    padding: 100px 22px 56px;
+  }
   .contact-inner {
     padding: 32px 22px 42px;
   }
   .contact-title {
-    font-size: clamp(2rem, 10vw, 2.7rem);
+    font-size: clamp(1.9rem, 9vw, 2.6rem);
   }
   .actions {
     flex-direction: column;
