@@ -10,7 +10,7 @@
 
 .room-wrapper {
   position: relative;
-  height: 125vh; /* 30% taller than screen */
+  height: 115vh; /* 30% taller than screen */
   aspect-ratio: 16 / 9;
   bottom: 28%;
   will-change: transform; /* added for smoother rise */
@@ -92,6 +92,7 @@
   right: 50%;
   width: 4.3%;
   pointer-events: none;
+  display: none;
 }
 
 /* mail already positioned; keep dimensions similar to before */
@@ -101,4 +102,12 @@
   bottom: 60%;
   width: 6%;
   /* now interactive via InteractiveObject */
+}
+
+.rug {
+  position: absolute;
+  bottom: 52%;
+  left: 38%;
+  width: 25%;
+  pointer-events: none;
 }

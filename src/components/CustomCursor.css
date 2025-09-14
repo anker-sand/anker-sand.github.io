@@ -1,0 +1,73 @@
+:root {
+  --cursor-dot-size: 10px;
+  --cursor-ring-size: 25px;
+  --cursor-ring-border: 3.8px;
+}
+
+body:not(.native-cursor) {
+  cursor: none;
+}
+
+/* Prevent default pointer on interactive elements */
+body:not(.native-cursor) a,
+body:not(.native-cursor) button,
+body:not(.native-cursor) [role="button"],
+body:not(.native-cursor) .interactive-object,
+body:not(.native-cursor) .proj-item,
+body:not(.native-cursor) .proj-learn-btn,
+body:not(.native-cursor) .proj-open-btn,
+body:not(.native-cursor) .nav-icon {
+  cursor: none !important;
+}
+
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 10000;
+  opacity: 1;
+  will-change: transform;
+  transition: opacity 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+  /* CSS variables for transform (no transform transitions for smoothness) */
+  --tx: 0px;
+  --ty: 0px;
+  transform: translate3d(var(--tx), var(--ty), 0);
+}
+
+.cursor-dot {
+  width: var(--cursor-dot-size);
+  height: var(--cursor-dot-size);
+  margin: calc(var(--cursor-dot-size) / -2) 0 0
+    calc(var(--cursor-dot-size) / -2);
+  background: #000;
+  border-radius: 50%;
+}
+
+.cursor-ring {
+  --ring-scale: 1;
+  width: var(--cursor-ring-size);
+  height: var(--cursor-ring-size);
+  margin: -15px 0 0 -15px;
+  border: var(--cursor-ring-border) solid #000;
+  border-radius: 90%;
+  background: transparent;
+}
+.cursor-dot.is-active {
+  background: #fff;
+}
+
+.cursor-ring.is-active {
+  border-color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-ring,
+  .cursor-dot {
+    display: none;
+  }
+  body {
+    cursor: auto;
+  }
+}

@@ -7,6 +7,7 @@ import Projects from "./pages/Projects";
 import Contact from "./pages/Contact"; // <-- ADD
 import cloudsVideo from "./assets/videos/sunclouds.mp4";
 import "./main.css";
+import CustomCursor from "./components/CustomCursor"; // ADD
 
 /*
   Path-based state (no hash). For GitHub Pages you must have a 404.html
@@ -74,6 +75,7 @@ export default function App() {
 
   return (
     <div className="app-container">
+      <CustomCursor /> {/* ADD */}
       <video
         autoPlay
         loop

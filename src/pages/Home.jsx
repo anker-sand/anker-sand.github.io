@@ -8,6 +8,7 @@ import chair from "../assets/images/room/chair.png"; // NEW
 import doormat from "../assets/images/room/doormat.png"; // NEW
 import plant from "../assets/images/room/plant.png"; // NEW
 import bookcase from "../assets/images/room/bookcase.png"; // NEW
+import rug from "../assets/images/room/rug.png"; // NEW
 import InteractiveObject from "../components/Room/objects/InteractiveObject";
 import "./Home.css";
 import { motion } from "framer-motion"; // <-- added
@@ -47,6 +48,7 @@ export default function Home({ onNavigate }) {
         <img src={doormat} className="doormat" />
         <img src={plant} className="plant" />
         <img src={bookcase} className="bookcase" />
+        <img src={rug} className="rug" />
 
         {/* Mail now interactive -> Contact page */}
         <InteractiveObject
