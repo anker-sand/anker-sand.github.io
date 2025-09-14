@@ -1,64 +1,71 @@
-# Copilot Instructions for ankerderbanker.github.io
+## AI Project Instructions: anker-sand.github.io
 
-## Project Overview
+Concise guidance for automated coding agents working on this Vite + React (JSX) single‑page portfolio with custom path routing and animated transitions.
 
-- **Stack:** React (JSX) + Vite for fast development and HMR.
-- **Structure:**
-  - `src/` contains all source code.
-    - `components/` for reusable UI (e.g., `Navbar`, `Room` with subcomponents like `Cat`, `Mail`).
-    - `pages/` for route-level components (`Home.jsx`, `About.jsx`, etc.).
-    - `assets/` for images, videos, and animations, organized by type and usage.
-  - `public/` for static assets served directly.
-  - `notused/` for unused or archived media.
-- **Entry Point:** `src/main.jsx` (mounts `App.jsx`).
+### 1. Architecture & Entry
 
-## Key Patterns & Conventions
+- Bootstrapped by Vite: `index.html` -> `src/main.jsx` mounts `<App />`.
+- No React Router for page content; manual path/state sync in `App.jsx` (`activePage` + `history.replaceState`). (React Router packages are installed but currently unused.)
+- Visual sections are "pages" in `src/pages/` (`Home`, `About`, `Projects`) switched via a keyed `<motion.div>` wrapped in `AnimatePresence` for fade transitions.
+- Persistent layout: background looping `<video>` + `Navbar` stay mounted; only inner page wrapper remounts.
 
-- **Component Organization:**
-  - Use folders for complex components (e.g., `Navbar/`, `Room/objects/`).
-  - CSS modules or component-scoped CSS (e.g., `Navbar.css`).
-- **Asset Management:**
-  - Reference images/videos from `src/assets/` using relative imports.
-  - Large or static files go in `public/`.
-- **Routing:**
-  - Page components in `src/pages/`.
-  - No explicit router found; if adding one, follow this pattern.
+### 2. Navigation Pattern
 
-## Developer Workflows
+- Path <-> state mapping in `App.jsx` (`getPageFromPath`, `pageToPath`).
+- On navigation: update `activePage`, effect sets URL with `history.replaceState` (no history stacking) and `window.scrollTo(0,0)`.
+- Back/forward handled by `popstate` listener; ensure any new navigation method also updates both state and path consistently.
+- If adding official routing (e.g. React Router), preserve current fade & scroll reset behavior; centralize transitions instead of duplicating per route.
+- GitHub Pages note: needs 404.html redirect to `index.html` for deep links (mention if adding new paths).
 
-- **Start Dev Server:**
-  - `npm run dev` (Vite, with HMR)
-- **Build for Production:**
-  - `npm run build`
-- **Preview Production Build:**
-  - `npm run preview`
-- **Linting:**
-  - ESLint config in `eslint.config.js` (JS only, no TypeScript by default)
+### 3. Animation & Interaction
 
-## Integration & External Dependencies
+- Uses `framer-motion` globally for page fades (`opacity` with `mode="wait"`) and for entrance of room scene (`Home.jsx` motion wrapper). Keep transitions short (<0.6s) to avoid perceived lag/flicker.
+- Interactive scene objects (`InteractiveObject.jsx`) implement hover tooltips via local state + `position: fixed` coordinates; reuse this component for any clickable hotspot.
+- When adding new animated elements, prefer a single parent motion container over many siblings to reduce layout thrash.
 
-- **Vite Plugins:**
-  - Uses `@vitejs/plugin-react` or `@vitejs/plugin-react-swc` (see `vite.config.js`).
-- **No backend or API integration** detected in this repo.
+### 4. Components & Styling Conventions
 
-## Project-Specific Notes
+- Complex component folders (e.g. `components/Navbar/`); related CSS file colocated (`Navbar.css`, `InteractiveObject.css`). Follow this when adding new components.
+- Room / scene assets live under `src/assets/images/room/`; page‑specific images nest under `assets/images/<page>/` if added.
+- Use descriptive classNames; avoid global resets beyond what's already in `main.css` / `App.css`.
 
-- **No TypeScript:** All code is JavaScript/JSX.
-- **No test framework** or test files present.
-- **No custom scripts** beyond Vite defaults in `package.json`.
-- **Unused assets** are kept in `notused/` for reference.
+### 5. Assets & Performance
 
-## Examples
+- Videos: imported from `src/assets/videos/` and inlined by Vite (example: background `sunclouds.mp4`). Keep large media optimized (looping ambient videos should be short + compressed).
+- Static JSON (`public/projects.json`) is fetchable at runtime if needed; importing from `public` is not processed by Vite bundler.
+- Prefer importing images (ensures hashing) over referencing via `/public` unless truly static external resources.
 
-- To add a new room object: create a new component in `src/components/Room/objects/` and import it in the parent Room component.
-- To add a new page: create a new file in `src/pages/` and link it via the `Navbar`.
+### 6. Adding Features (Examples)
+
+- New Page: create `src/pages/XYZ.jsx`, add switch case in `renderPage()` inside `App.jsx`, extend `pageToPath` + `getPageFromPath`, add button in `Navbar`.
+- New Interactive Object: place PNG in `assets/images/room/`, import in `Home.jsx`, wrap with `<InteractiveObject image={...} tooltipText="..." onClick={() => onNavigate('target')} />`.
+- Global Transition Variant: adjust single `motion.div` in `App.jsx`; avoid per-page duplicate fade wrappers.
+
+### 7. Scripts & Tooling
+
+- Dev: `npm run dev` (HMR).
+- Build: `npm run build` -> dist output (no custom config beyond `@vitejs/plugin-react-swc`).
+- Preview: `npm run preview`.
+- Lint: `npm run lint` uses `eslint.config.js` (React + hooks plugins). No tests presently; if adding, document framework here.
+
+### 8. Dependencies In-Use
+
+- Core: `react`, `react-dom` 19.x.
+- Animation: `framer-motion`.
+- Icons: `lucide-react` (tree-shake imported icons only).
+- NOTE: `react-router` & `react-router-dom` are installed but intentionally not utilized—avoid partial adoption that duplicates existing manual routing.
+
+### 9. Common Pitfalls / Gotchas
+
+- Flicker (page "twitch"): Ensure only one keyed motion container; don't wrap pages themselves again with exit/enter unless removing current pattern. Keep `will-change: opacity` as in `App.jsx`.
+- Scroll restoration forcibly set to `manual`; avoid conflicting logic in new components that auto-scroll on mount.
+- Tooltips: Because they use `position: fixed`, offset calculations rely on mouse events; avoid wrapping `InteractiveObject` in elements that stop pointer events.
+
+### 10. When Extending
+
+- Update this file + `README.md` when adding routing library, test framework, or asset pipeline changes.
+- Keep instructions concise; remove references to unused dependencies if you excise them.
 
 ---
 
-**For AI agents:**
-
-- Follow the file/folder conventions above.
-- Prefer colocating styles with components.
-- Use relative imports for assets.
-- Keep code modular and organized by feature.
-- If adding new workflows or dependencies, update this file and `README.md`.
+For AI changes: Maintain current manual path sync unless fully migrating to React Router in one cohesive PR. Consolidate animation patterns; avoid introducing global state libraries prematurely. Prefer incremental, readable diffs.

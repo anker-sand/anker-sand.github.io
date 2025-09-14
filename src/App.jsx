@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+// (Page transition animations removed previously)
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -22,7 +22,7 @@ function getPageFromPath() {
   const p = normalizePath(window.location.pathname).toLowerCase();
   if (p === "/about") return "about";
   if (p === "/projects") return "projects";
-  return "home"; // default for "/" or unknown
+  return "home";
 }
 
 const pageToPath = {
@@ -34,26 +34,22 @@ const pageToPath = {
 export default function App() {
   const [activePage, setActivePage] = useState(() => getPageFromPath());
 
-  // Prevent browser from restoring old scroll position
+  // Keep manual to avoid browser restoring scroll in ways that look like jumps
   useEffect(() => {
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
   }, []);
 
-  // Sync state -> URL path (replaceState to avoid history spam)
+  // Update path without scrolling (removed automatic scroll-to-top)
   useEffect(() => {
     const desired = pageToPath[activePage] || "/";
     if (normalizePath(window.location.pathname) !== desired) {
       history.replaceState(null, "", desired);
     }
-    window.scrollTo(0, 0);
   }, [activePage]);
 
-  // Listen to back/forward
+  // Handle back/forward
   useEffect(() => {
-    const onPop = () => {
-      const page = getPageFromPath();
-      setActivePage(page);
-    };
+    const onPop = () => setActivePage(getPageFromPath());
     window.addEventListener("popstate", onPop);
     return () => window.removeEventListener("popstate", onPop);
   }, []);
@@ -82,19 +78,9 @@ export default function App() {
         src={cloudsVideo}
       />
       <Navbar onNavigate={setActivePage} />
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={activePage}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
-          className="page-wrapper"
-          style={{ willChange: "opacity" }}
-        >
-          {renderPage()}
-        </motion.div>
-      </AnimatePresence>
+      <div className="page-wrapper" style={{ minHeight: "100vh" }}>
+        {renderPage()}
+      </div>
     </div>
   );
 }
