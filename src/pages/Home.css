@@ -60,9 +60,45 @@
   width: 5.5%;
 }
 
+/* ...existing code... */
+
+.chair {
+  position: absolute;
+  bottom: 58%;
+  left: 28%;
+  width: 7%;
+  pointer-events: none;
+}
+
+.doormat {
+  position: absolute;
+  bottom: 59.7%;
+  right: 27.5%;
+  width: 8%;
+  pointer-events: none;
+}
+
+.plant {
+  position: absolute;
+  bottom: 46%;
+  right: 24%;
+  width: 0.5%;
+  pointer-events: none;
+}
+
+.bookcase {
+  position: absolute;
+  top: 10%;
+  right: 50%;
+  width: 4.3%;
+  pointer-events: none;
+}
+
+/* mail already positioned; keep dimensions similar to before */
 .mail {
   position: absolute;
-  right: 5%;
-  bottom: 2%;
-  width: 12%;
+  right: 28%;
+  bottom: 60%;
+  width: 6%;
+  /* now interactive via InteractiveObject */
 }

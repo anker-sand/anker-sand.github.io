@@ -1,0 +1,176 @@
+.contact-page {
+  width: 100%;
+  padding: clamp(32px, 6vw, 80px) clamp(24px, 5vw, 120px);
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  color: #2d241e;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+.contact-inner {
+  max-width: 720px;
+  width: 100%;
+  background: rgba(245, 235, 210, 0.55);
+  backdrop-filter: blur(5px) saturate(1.05);
+  -webkit-backdrop-filter: blur(5px) saturate(1.05);
+  border: 1px solid rgba(90, 60, 30, 0.12);
+  border-radius: 14px;
+  padding: clamp(24px, 3.2vw, 44px);
+  box-shadow: 0 6px 28px -10px rgba(40, 25, 15, 0.22);
+}
+
+.contact-title {
+  margin: 0 0 10px;
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  line-height: 1.02;
+  font-family: jetbrains-mono, ui-monospace, monospace;
+  color: #5a3417;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.contact-lead {
+  font-size: 1rem;
+  line-height: 1.45;
+  margin: 0 0 0.9rem;
+  max-width: 58ch;
+  color: #442b1a;
+}
+
+.contact-mail-link {
+  font-weight: 600;
+  color: #8d521b;
+  text-decoration: none;
+  position: relative;
+}
+.contact-mail-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(90deg, #d9a669, #b6752a);
+  transform: scaleX(0.35);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+  opacity: 0.85;
+}
+.contact-mail-link:hover::after {
+  transform: scaleX(1);
+}
+
+.contact-form {
+  margin-top: 1.6rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.field label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  color: #5c3a22;
+}
+
+.field input,
+.field textarea {
+  border: 1px solid rgba(110, 72, 40, 0.3);
+  background: rgba(255, 255, 255, 0.75);
+  font: inherit;
+  font-size: 0.95rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: 8px;
+  color: #3a281b;
+  resize: vertical;
+  transition: border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s;
+}
+
+.field textarea {
+  line-height: 1.4;
+}
+
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: #cc924a;
+  background: #fff;
+  box-shadow: 0 0 0 2px rgba(204, 146, 74, 0.25);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  margin-top: 0.25rem;
+}
+
+.actions button {
+  background: linear-gradient(135deg, #d9a669, #b47529);
+  color: #222;
+  font-family: jetbrains-mono, monospace;
+  border: none;
+  padding: 0.65rem 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 9px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: transform 0.18s ease, box-shadow 0.25s ease;
+  box-shadow: 0 3px 12px -5px rgba(120, 70, 20, 0.42);
+}
+
+.actions button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px -6px rgba(120, 70, 20, 0.52);
+}
+
+.actions button:active:not(:disabled) {
+  transform: translateY(0);
+}
+.actions button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.alt-mail {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: #7b4a1f;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  background: rgba(210, 150, 80, 0.25);
+  transition: background 0.22s ease;
+}
+.alt-mail:hover {
+  background: rgba(210, 150, 80, 0.4);
+}
+
+@media (max-width: 780px) {
+  .contact-inner {
+    padding: 32px 22px 42px;
+  }
+  .contact-title {
+    font-size: clamp(2rem, 10vw, 2.7rem);
+  }
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .actions button,
+  .alt-mail {
+    width: 100%;
+    text-align: center;
+  }
+}

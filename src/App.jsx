@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Projects from "./pages/Projects";
+import Contact from "./pages/Contact"; // <-- ADD
 import cloudsVideo from "./assets/videos/sunclouds.mp4";
 import "./main.css";
 
@@ -22,6 +23,7 @@ function getPageFromPath() {
   const p = normalizePath(window.location.pathname).toLowerCase();
   if (p === "/about") return "about";
   if (p === "/projects") return "projects";
+  if (p === "/contact") return "contact"; // <-- ADD
   return "home";
 }
 
@@ -29,6 +31,7 @@ const pageToPath = {
   home: "/",
   about: "/about",
   projects: "/projects",
+  contact: "/contact", // <-- ADD
 };
 
 export default function App() {
@@ -62,6 +65,8 @@ export default function App() {
         return <About />;
       case "projects":
         return <Projects />;
+      case "contact": // <-- ADD
+        return <Contact />;
       default:
         return <Home onNavigate={setActivePage} />;
     }
