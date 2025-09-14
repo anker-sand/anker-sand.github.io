@@ -13,7 +13,7 @@
 .nav-icon {
   width: clamp(40px, 5vw, 70px);
   height: clamp(40px, 5vw, 70px);
-  color: rgb(236, 168, 21);
+  color: rgb(241, 182, 54);
   cursor: pointer;
   transition: transform 0.18s ease;
 }

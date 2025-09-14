@@ -1,79 +1,245 @@
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import "./Projects.css";
+import { useEffect, useState, useRef } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import cubePng from "../assets/images/projects/projectcube.png";
+import "./Projects.css";
 
 export default function Projects() {
   const [projectsData, setProjectsData] = useState([]);
   const [activeId, setActiveId] = useState(null);
+
+  // Inline showcase carousel
   const [imgIndex, setImgIndex] = useState(0);
   const [prevImgIndex, setPrevImgIndex] = useState(0);
   const [isFading, setIsFading] = useState(false);
 
+  // Sequence control
+  const firstMountRef = useRef(true);
+  const [cubeDone, setCubeDone] = useState(false);
+  const [showText, setShowText] = useState(false);
+  const [showInlineShowcase, setShowInlineShowcase] = useState(false);
+
+  // Timeouts / intervals
+  const fadeTimeoutRef = useRef(null);
+  const showcaseIntervalRef = useRef(null);
+  const inlineShowcaseDelayRef = useRef(null);
+
   useEffect(() => {
     fetch("/projects.json")
-      .then((res) => res.json())
+      .then((r) => r.json())
       .then((data) => {
-        setProjectsData(data);
-        setActiveId(data[0]?.id);
+        setProjectsData(data || []);
+        if (data?.length) setActiveId(data[0].id);
       })
-      .catch((err) => console.error("Failed to load projects.json", err));
+      .catch((e) => console.error("projects.json load failed", e));
+    return () => {
+      clearTimeout(fadeTimeoutRef.current);
+      clearTimeout(inlineShowcaseDelayRef.current);
+      clearInterval(showcaseIntervalRef.current);
+    };
   }, []);
 
   const activeProject = projectsData.find((p) => p.id === activeId);
 
-  // Reset image index when project changes
-  useEffect(() => setImgIndex(0), [activeId]);
+  // Reset carousel on project change
+  useEffect(() => {
+    setImgIndex(0);
+    setPrevImgIndex(0);
+    setIsFading(false);
+  }, [activeId]);
+
+  // Sequence: cube rise -> text -> inline showcase (delay)
+  useEffect(() => {
+    if (cubeDone && firstMountRef.current) {
+      setShowText(true);
+      inlineShowcaseDelayRef.current = setTimeout(
+        () => setShowInlineShowcase(true),
+        450
+      );
+      firstMountRef.current = false;
+    } else if (!firstMountRef.current) {
+      setShowText(true);
+      setShowInlineShowcase(true);
+    }
+  }, [cubeDone, activeId]);
+
+  // Auto‑advance inline showcase
+  useEffect(() => {
+    if (!activeProject || !showInlineShowcase) {
+      clearInterval(showcaseIntervalRef.current);
+      return;
+    }
+    const total = activeProject.images?.length || 0;
+    if (total <= 1) return;
+
+    showcaseIntervalRef.current = setInterval(() => {
+      setPrevImgIndex((i) => i);
+      startFadeSwap((i) => (i + 1) % total);
+    }, 5000);
+
+    return () => clearInterval(showcaseIntervalRef.current);
+  }, [showInlineShowcase, activeProject]);
 
   if (!activeProject) {
-    return <div className="projects-page">Loading projects...</div>;
+    return (
+      <div className="projects-page">
+        <div>Loading projects...</div>
+      </div>
+    );
   }
 
-  const total = activeProject.images.length;
+  const total = activeProject.images?.length || 0;
 
-  const prev = () => {
-    setPrevImgIndex(imgIndex);
+  const startFadeSwap = (nextIndexFn) => {
+    if (isFading || total <= 1) return;
+    setPrevImgIndex((i) => i);
     setIsFading(true);
-    setTimeout(() => {
-      setImgIndex((i) => (i - 1 + total) % total);
+    fadeTimeoutRef.current = setTimeout(() => {
+      setImgIndex((i) => nextIndexFn(i));
       setIsFading(false);
     }, 500);
   };
 
-  const next = () => {
-    setPrevImgIndex(imgIndex);
-    setIsFading(true);
-    setTimeout(() => {
-      setImgIndex((i) => (i + 1) % total);
-      setIsFading(false);
-    }, 500);
+  const handleManualAdvance = () => {
+    if (total <= 1) return;
+    startFadeSwap((i) => (i + 1) % total);
   };
+
+  /* ---------- Variants ---------- */
+  const titleAndListVariants = {
+    initial: { opacity: 0, y: 20 },
+    animate: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.55, ease: [0.33, 0.11, 0.22, 1] },
+    },
+  };
+
+  const listItemVariants = {
+    initial: { opacity: 0, y: 14 },
+    animate: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.38, ease: "easeOut" },
+    },
+  };
+
+  const cubeRiseVariants = {
+    initial: { opacity: 0, y: 180 },
+    animate: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.85,
+        ease: [0.22, 0.72, 0.18, 1.02],
+        delay: 0.05,
+      },
+    },
+  };
+
+  const textContainerVariants = {
+    initial: { opacity: 0 },
+    animate: {
+      opacity: 1,
+      transition: {
+        opacity: { duration: 0.2 },
+        staggerChildren: 0.035,
+        delayChildren: 0.05,
+      },
+    },
+    exit: {
+      opacity: 0,
+      transition: { duration: 0.16 },
+    },
+  };
+
+  const wordVariants = {
+    initial: { y: "110%", opacity: 0 },
+    animate: {
+      y: "0%",
+      opacity: 1,
+      transition: { duration: 0.42, ease: [0.4, 0.2, 0.2, 1] },
+    },
+    exit: {
+      y: "-55%",
+      opacity: 0,
+      transition: { duration: 0.25, ease: "easeIn" },
+    },
+  };
+
+  const descVariants = {
+    initial: { opacity: 0, y: 8 },
+    animate: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.45, ease: "easeOut", delay: 0.1 },
+    },
+    exit: { opacity: 0, y: -6, transition: { duration: 0.25 } },
+  };
+
+  const inlineShowcaseVariants = {
+    initial: { opacity: 0, y: 12 },
+    animate: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.55, ease: [0.33, 0.11, 0.22, 1] },
+    },
+  };
+
+  const splitWords = (str = "") =>
+    str.trim().length ? str.trim().split(/\s+/) : [];
+
+  const renderAnimatedWords = (words, prefix) =>
+    words.flatMap((w, i, arr) => [
+      <span className="word-wrapper" key={`${prefix}-${i}`}>
+        <motion.span variants={wordVariants}>{w}</motion.span>
+      </span>,
+      i < arr.length - 1 ? " " : null,
+    ]);
 
   return (
     <div className="projects-page">
-      {/* LEFT: title and list */}
       <aside>
-        <h1 className="proj-title">Projects</h1>
+        <motion.h1
+          className="proj-title"
+          variants={titleAndListVariants}
+          initial={firstMountRef.current ? "initial" : false}
+          animate="animate"
+        >
+          Projects
+        </motion.h1>
+
         <motion.div
           className="proj-list"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: { delay: 0.15 } }}
+          variants={titleAndListVariants}
+          initial={firstMountRef.current ? "initial" : false}
+          animate="animate"
         >
-          <ul>
+          <motion.ul
+            style={{
+              listStyle: "none",
+              margin: 5,
+              padding: 0,
+              display: "grid",
+              gap: 0,
+            }}
+          >
             {projectsData.map((p) => {
               const isActive = p.id === activeId;
               return (
-                <li
+                <motion.li
                   key={p.id}
+                  variants={listItemVariants}
+                  initial={firstMountRef.current ? "initial" : false}
+                  animate="animate"
                   className={isActive ? "proj-li active" : "proj-li"}
                 >
                   <button
                     className={isActive ? "proj-item active" : "proj-item"}
                     onClick={() => setActiveId(p.id)}
+                    type="button"
                   >
                     {p.title}
                   </button>
-
                   {isActive && (
                     <div className="proj-expand">
                       <div className="proj-expand-actions">
@@ -104,81 +270,134 @@ export default function Projects() {
                       </div>
                     </div>
                   )}
-                </li>
+                </motion.li>
               );
             })}
-          </ul>
+          </motion.ul>
         </motion.div>
       </aside>
 
-      {/* RIGHT: showcase + cube */}
       <div className="proj-right">
-        {/* Showcase with arrows outside the frame */}
-        <motion.div
-          className="showcase"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: { delay: 0.25 } }}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <button
-            className="arrow outside left"
-            onClick={prev}
-            aria-label="Previous"
-            style={{ marginRight: "24px" }}
-          >
-            ‹
-          </button>
-          <div className="showcase-frame">
-            {/* Previous image fades out, new image fades in */}
-            <img
-              src={activeProject.images[prevImgIndex]}
-              alt=""
-              className={`showcase-image${isFading ? "" : " hide"}`}
-              draggable={false}
-              aria-hidden="true"
-            />
-            <img
-              src={activeProject.images[imgIndex]}
-              alt={`${activeProject.title} screenshot`}
-              className={`showcase-image${isFading ? " hide" : ""}`}
-              draggable={false}
-            />
-          </div>
-          <button
-            className="arrow outside right"
-            onClick={next}
-            aria-label="Next"
-            style={{ marginLeft: "24px" }}
-          >
-            ›
-          </button>
-        </motion.div>
-
-        {/* Cube with overlay text */}
         <motion.section
           className="cube-wrap"
-          initial={{ y: 120, opacity: 0 }}
-          animate={{
-            y: 0,
-            opacity: 1,
-            transition: { duration: 0.6, ease: "easeOut", delay: 0.3 },
+          variants={cubeRiseVariants}
+          initial={firstMountRef.current ? "initial" : false}
+          animate="animate"
+          onAnimationComplete={() => {
+            if (!cubeDone) setCubeDone(true);
           }}
         >
           <div className="cube">
-            <img src={cubePng} alt="Cube" className="cube-image" />
+            <img src={cubePng} alt="Decorative cube" className="cube-image" />
             <div className="cube-face-warp">
-              <h2 className="cube-h2">{activeProject.title}</h2>
-              {activeProject.subtitle && (
-                <p className="cube-sub">{activeProject.subtitle}</p>
-              )}
-              <p className="cube-desc">{activeProject.description}</p>
-              {activeProject.credits && (
-                <p className="cube-credits">{activeProject.credits}</p>
-              )}
+              <AnimatePresence mode="wait">
+                {showText && (
+                  <motion.div
+                    key={activeProject.id}
+                    className="cube-text-anim"
+                    variants={textContainerVariants}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                  >
+                    <h2 className="cube-h2 animated-title depth-layer depth-title">
+                      {renderAnimatedWords(
+                        splitWords(activeProject.title),
+                        "t"
+                      )}
+                    </h2>
+
+                    {activeProject.subtitle && (
+                      <p className="cube-sub depth-layer depth-sub">
+                        {renderAnimatedWords(
+                          splitWords(activeProject.subtitle),
+                          "s"
+                        )}
+                      </p>
+                    )}
+
+                    {activeProject.description && (
+                      <div className="depth-layer depth-desc">
+                        <motion.p
+                          className="cube-desc"
+                          variants={descVariants}
+                          initial="initial"
+                          animate="animate"
+                          exit="exit"
+                        >
+                          {activeProject.description}
+                        </motion.p>
+                      </div>
+                    )}
+
+                    {activeProject.credits && (
+                      <div className="depth-layer depth-credits">
+                        <motion.p
+                          className="cube-credits"
+                          variants={descVariants}
+                          initial="initial"
+                          animate="animate"
+                          exit="exit"
+                        >
+                          {activeProject.credits}
+                        </motion.p>
+                      </div>
+                    )}
+
+                    <AnimatePresence>
+                      {showInlineShowcase && total > 0 && (
+                        <div className="depth-layer depth-showcase">
+                          <motion.div
+                            className="cube-showcase"
+                            variants={inlineShowcaseVariants}
+                            initial="initial"
+                            animate="animate"
+                            exit={{ opacity: 0 }}
+                            onClick={handleManualAdvance}
+                            title={
+                              total > 1
+                                ? "Click to view next image"
+                                : "Showcase"
+                            }
+                          >
+                            <img
+                              src={activeProject.images[prevImgIndex]}
+                              alt=""
+                              className={`cube-showcase-image${
+                                isFading ? "" : " hide"
+                              }`}
+                              draggable={false}
+                              aria-hidden="true"
+                            />
+                            <img
+                              src={activeProject.images[imgIndex]}
+                              alt={`${activeProject.title} showcase`}
+                              className={`cube-showcase-image${
+                                isFading ? " hide" : ""
+                              }`}
+                              draggable={false}
+                            />
+                            {total > 1 && (
+                              <div className="cube-showcase-indicators">
+                                {activeProject.images.map((_, i) => (
+                                  <span
+                                    key={i}
+                                    className={
+                                      i === imgIndex
+                                        ? "cube-showcase-dot active"
+                                        : "cube-showcase-dot"
+                                    }
+                                  />
+                                ))}
+                              </div>
+                            )}
+                          </motion.div>
+                        </div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
         </motion.section>
