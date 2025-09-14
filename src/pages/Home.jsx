@@ -6,15 +6,23 @@ import door from "../assets/images/room/door.png";
 import mail from "../assets/images/room/mail.png";
 import InteractiveObject from "../components/Room/objects/InteractiveObject";
 import "./Home.css";
+import { motion } from "framer-motion"; // <-- added
 
 export default function Home({ onNavigate }) {
   return (
     <div className="home-container">
-      <div className="room-wrapper">
+      <motion.div
+        className="room-wrapper"
+        initial={{ y: 160, opacity: 0 }}
+        animate={{
+          y: 0,
+          opacity: 1,
+          transition: { duration: 0.6, ease: "easeOut", delay: 0.15 },
+        }}
+      >
         <img src={roomBase} className="room-base" />
         <img src={desk} className="desk" />
 
-        {/* About me chair */}
         <InteractiveObject
           image={meinchair}
           className="meinchair"
@@ -22,7 +30,6 @@ export default function Home({ onNavigate }) {
           onClick={() => onNavigate("about")}
         />
 
-        {/* Projects wall */}
         <InteractiveObject
           image={projectwall}
           className="projectwall"
@@ -32,7 +39,7 @@ export default function Home({ onNavigate }) {
 
         <img src={door} className="door" />
         <img src={mail} className="mail" />
-      </div>
+      </motion.div>
     </div>
   );
 }

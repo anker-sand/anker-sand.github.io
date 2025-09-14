@@ -53,25 +53,60 @@ export default function Projects() {
     <div className="projects-page">
       {/* LEFT: title and list */}
       <aside>
-        <h1 className="proj-title">projects</h1>
+        <h1 className="proj-title">Projects</h1>
         <motion.div
           className="proj-list"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, transition: { delay: 0.15 } }}
         >
           <ul>
-            {projectsData.map((p) => (
-              <li key={p.id}>
-                <button
-                  className={
-                    p.id === activeId ? "proj-item active" : "proj-item"
-                  }
-                  onClick={() => setActiveId(p.id)}
+            {projectsData.map((p) => {
+              const isActive = p.id === activeId;
+              return (
+                <li
+                  key={p.id}
+                  className={isActive ? "proj-li active" : "proj-li"}
                 >
-                  {p.title}
-                </button>
-              </li>
-            ))}
+                  <button
+                    className={isActive ? "proj-item active" : "proj-item"}
+                    onClick={() => setActiveId(p.id)}
+                  >
+                    {p.title}
+                  </button>
+
+                  {isActive && (
+                    <div className="proj-expand">
+                      <div className="proj-expand-actions">
+                        <button
+                          type="button"
+                          className="proj-learn-btn"
+                          onClick={() =>
+                            document
+                              .querySelector(".cube-wrap")
+                              ?.scrollIntoView({ behavior: "smooth" })
+                          }
+                        >
+                          learn more
+                        </button>
+                        <a
+                          className={
+                            p.url ? "proj-open-btn" : "proj-open-btn disabled"
+                          }
+                          href={p.url || "#"}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => {
+                            if (!p.url) e.preventDefault();
+                          }}
+                        >
+                          open in browser
+                        </a>
+                      </div>
+                    </div>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </motion.div>
       </aside>
