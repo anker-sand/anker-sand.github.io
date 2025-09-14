@@ -41,7 +41,7 @@ body:not(.native-cursor) .nav-icon {
   height: var(--cursor-dot-size);
   margin: calc(var(--cursor-dot-size) / -2) 0 0
     calc(var(--cursor-dot-size) / -2);
-  background: #000;
+  background: #5f1f1f;
   border-radius: 50%;
 }
 
@@ -50,7 +50,7 @@ body:not(.native-cursor) .nav-icon {
   width: var(--cursor-ring-size);
   height: var(--cursor-ring-size);
   margin: -15px 0 0 -15px;
-  border: var(--cursor-ring-border) solid #000;
+  border: var(--cursor-ring-border) solid #5f1f1f;
   border-radius: 90%;
   background: transparent;
 }

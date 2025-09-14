@@ -38,7 +38,7 @@ export default function InteractiveObject({
           style={{
             position: "fixed",
             top: tooltip.y + 20, // closer vertically
-            left: tooltip.x + 20, // closer horizontally
+            left: tooltip.x + -80, // closer horizontally
           }}
         >
           {tooltipText}

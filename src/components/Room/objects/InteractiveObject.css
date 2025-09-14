@@ -10,11 +10,11 @@
 
 .tooltip {
   position: fixed;
-  background: rgba(56, 40, 40, 0.9);
+  background: #5f1f1f;
   color: #e7deab;
   padding: 8px 14px;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
   font-family: "jetbrains mono", monospace;
   letter-spacing: 0.5px;

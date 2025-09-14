@@ -110,17 +110,17 @@
   letter-spacing: 0.5px;
   padding: 10px 18px;
   border-radius: 2px;
-  background: rgba(217, 166, 105, 0.18);
-  border: 1px solid #d9a669;
+  background: rgba(37, 34, 29, 0.18);
+  border: 1px solid #b6a68d;
   cursor: pointer;
   font-weight: 500;
   transition: background 0.25s ease, transform 0.15s ease, box-shadow 0.25s ease;
   text-decoration: none;
-  color: #d9a669;
+  color: #ffffff;
 }
 
 .proj-open-btn {
-  color: #e6bc8a;
+  color: #ffffff;
 }
 
 .proj-learn-btn:hover,
@@ -165,8 +165,8 @@
   background: rgba(217, 166, 105, 0.28);
 }
 .proj-item.active {
-  background: #d9a669;
-  color: #2b2520;
+  background: #d6ae56;
+  color: #5f1f1f;
 }
 
 /* ---------- RIGHT SIDE / CUBE ---------- */
@@ -265,7 +265,7 @@
   transform: translateZ(var(--z-showcase))
     rotateY(calc(var(--depth-tilt-y) * 1.1))
     rotateX(calc(var(--depth-tilt-x) * 1.05))
-    skewY(calc(var(--depth-skew) * 0.6)) scale(0.985);
+    skewY(calc(var(--depth-skew) * 0.6)) scale(1.485);
 }
 
 /* Typography */

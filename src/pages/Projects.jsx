@@ -7,22 +7,18 @@ export default function Projects() {
   const [projectsData, setProjectsData] = useState([]);
   const [activeId, setActiveId] = useState(null);
 
-  // Inline showcase carousel
+  // Showcase state (simplified cross‑fade)
   const [imgIndex, setImgIndex] = useState(0);
-  const [prevImgIndex, setPrevImgIndex] = useState(0);
-  const [isFading, setIsFading] = useState(false);
+  const showcaseTimerRef = useRef(null);
 
   // Sequence control
   const firstMountRef = useRef(true);
   const [cubeDone, setCubeDone] = useState(false);
   const [showText, setShowText] = useState(false);
   const [showInlineShowcase, setShowInlineShowcase] = useState(false);
-
-  // Timeouts / intervals
-  const fadeTimeoutRef = useRef(null);
-  const showcaseIntervalRef = useRef(null);
   const inlineShowcaseDelayRef = useRef(null);
 
+  // Fetch project data
   useEffect(() => {
     fetch("/projects.json")
       .then((r) => r.json())
@@ -31,24 +27,23 @@ export default function Projects() {
         if (data?.length) setActiveId(data[0].id);
       })
       .catch((e) => console.error("projects.json load failed", e));
+
     return () => {
-      clearTimeout(fadeTimeoutRef.current);
       clearTimeout(inlineShowcaseDelayRef.current);
-      clearInterval(showcaseIntervalRef.current);
+      clearInterval(showcaseTimerRef.current);
     };
   }, []);
 
   const activeProject = projectsData.find((p) => p.id === activeId);
 
-  // Reset carousel on project change
+  // Reset showcase index when project changes
   useEffect(() => {
     setImgIndex(0);
-    setPrevImgIndex(0);
-    setIsFading(false);
   }, [activeId]);
 
-  // Sequence: cube rise -> text -> inline showcase (delay)
+  // Sequence: cube -> text -> showcase
   useEffect(() => {
+    if (!activeProject) return;
     if (cubeDone && firstMountRef.current) {
       setShowText(true);
       inlineShowcaseDelayRef.current = setTimeout(
@@ -60,53 +55,52 @@ export default function Projects() {
       setShowText(true);
       setShowInlineShowcase(true);
     }
-  }, [cubeDone, activeId]);
+  }, [cubeDone, activeProject]);
 
-  // Auto‑advance inline showcase
+  // Auto‑advance showcase (cross‑fade)
   useEffect(() => {
     if (!activeProject || !showInlineShowcase) {
-      clearInterval(showcaseIntervalRef.current);
+      clearInterval(showcaseTimerRef.current);
       return;
     }
-    const total = activeProject.images?.length || 0;
-    if (total <= 1) return;
+    const imgs = activeProject.images || [];
+    if (imgs.length <= 1) return;
 
-    showcaseIntervalRef.current = setInterval(() => {
-      setPrevImgIndex((i) => i);
-      startFadeSwap((i) => (i + 1) % total);
+    showcaseTimerRef.current = setInterval(() => {
+      setImgIndex((i) => (i + 1) % imgs.length);
     }, 5000);
 
-    return () => clearInterval(showcaseIntervalRef.current);
-  }, [showInlineShowcase, activeProject]);
+    return () => clearInterval(showcaseTimerRef.current);
+  }, [activeProject, showInlineShowcase]);
+
+  // Preload next image to avoid flash
+  useEffect(() => {
+    if (!activeProject) return;
+    const imgs = activeProject.images || [];
+    if (imgs.length < 2) return;
+    const next = imgs[(imgIndex + 1) % imgs.length];
+    const pre = new Image();
+    pre.src = next;
+  }, [activeProject, imgIndex]);
 
   if (!activeProject) {
-    return <div className="projects-page"></div>;
+    return <div className="projects-page" />;
   }
 
   const total = activeProject.images?.length || 0;
 
-  const startFadeSwap = (nextIndexFn) => {
-    if (isFading || total <= 1) return;
-    setPrevImgIndex((i) => i);
-    setIsFading(true);
-    fadeTimeoutRef.current = setTimeout(() => {
-      setImgIndex((i) => nextIndexFn(i));
-      setIsFading(false);
-    }, 500);
-  };
-
   const handleManualAdvance = () => {
     if (total <= 1) return;
-    startFadeSwap((i) => (i + 1) % total);
+    setImgIndex((i) => (i + 1) % total);
   };
 
   /* ---------- Variants ---------- */
   const titleAndListVariants = {
-    initial: { opacity: 0, y: 14 }, // was y:20
+    initial: { opacity: 0, y: 14 },
     animate: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.42, ease: [0.33, 0.11, 0.22, 1] }, // slightly shorter
+      transition: { duration: 0.42, ease: [0.33, 0.11, 0.22, 1] },
     },
   };
 
@@ -142,10 +136,7 @@ export default function Projects() {
         delayChildren: 0.05,
       },
     },
-    exit: {
-      opacity: 0,
-      transition: { duration: 0.16 },
-    },
+    exit: { opacity: 0, transition: { duration: 0.16 } },
   };
 
   const wordVariants = {
@@ -178,6 +169,19 @@ export default function Projects() {
       opacity: 1,
       y: 0,
       transition: { duration: 0.55, ease: [0.33, 0.11, 0.22, 1] },
+    },
+  };
+
+  // Cross-fade variants for images
+  const showcaseImageVariants = {
+    initial: { opacity: 0 },
+    animate: {
+      opacity: 1,
+      transition: { duration: 0.55, ease: [0.4, 0.2, 0.2, 1] },
+    },
+    exit: {
+      opacity: 0,
+      transition: { duration: 0.45, ease: "easeOut" },
     },
   };
 
@@ -340,7 +344,7 @@ export default function Projects() {
                       </div>
                     )}
 
-                    <AnimatePresence>
+                    <AnimatePresence mode="wait">
                       {showInlineShowcase && total > 0 && (
                         <div className="depth-layer depth-showcase">
                           <motion.div
@@ -356,23 +360,24 @@ export default function Projects() {
                                 : "Showcase"
                             }
                           >
-                            <img
-                              src={activeProject.images[prevImgIndex]}
-                              alt=""
-                              className={`cube-showcase-image${
-                                isFading ? "" : " hide"
-                              }`}
-                              draggable={false}
-                              aria-hidden="true"
-                            />
-                            <img
-                              src={activeProject.images[imgIndex]}
-                              alt={`${activeProject.title} showcase`}
-                              className={`cube-showcase-image${
-                                isFading ? " hide" : ""
-                              }`}
-                              draggable={false}
-                            />
+                            <div className="cube-showcase-stage">
+                              <AnimatePresence mode="wait">
+                                <motion.img
+                                  key={imgIndex}
+                                  src={activeProject.images[imgIndex]}
+                                  className="cube-showcase-image"
+                                  alt={`${activeProject.title} showcase ${
+                                    imgIndex + 1
+                                  }`}
+                                  variants={showcaseImageVariants}
+                                  initial="initial"
+                                  animate="animate"
+                                  exit="exit"
+                                  draggable={false}
+                                />
+                              </AnimatePresence>
+                            </div>
+
                             {total > 1 && (
                               <div className="cube-showcase-indicators">
                                 {activeProject.images.map((_, i) => (
