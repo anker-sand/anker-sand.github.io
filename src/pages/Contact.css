@@ -1,6 +1,5 @@
 .contact-page {
   /* WAS: display:flex; justify-content:center; */
-  align-self: flex-start; /* override parent flex centering */
   width: 100%;
   box-sizing: border-box;
   padding: 140px clamp(24px, 5vw, 120px) 80px; /* top spacing similar to Projects/Home */

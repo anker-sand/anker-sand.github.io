@@ -1,0 +1,317 @@
+.about-page {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  padding: 140px clamp(24px, 5vw, 110px) 80px;
+  box-sizing: border-box;
+  font-family: "Inter", system-ui, sans-serif;
+  color: #111;
+  overflow: hidden;
+  align-self: flex-start;
+}
+
+/* Screen window calibration:
+   Adjust these four ONLY if the artwork changes.
+   They are percentages of the frame's bounding box. */
+:root {
+  --tv-screen-top: 37%;
+  --tv-screen-left: 38%;
+  --tv-screen-width: 24%;
+  --tv-screen-height: 24%;
+}
+
+/* Bigger TV base size */
+.tv-wrapper {
+  position: absolute;
+  width: clamp(420px, 36vw, 680px);
+  aspect-ratio: 4 / 3;
+  pointer-events: none;
+  z-index: 10;
+  will-change: left, top, transform, opacity;
+}
+
+/* Frame (alpha video) */
+.tv-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  z-index: 2; /* Above screen when transparent */
+  pointer-events: none;
+}
+
+/* If video fails */
+.tv-frame-fallback {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(140deg, #828a95, #5d6572);
+  border: 3px solid #333;
+  border-radius: 10px;
+  z-index: 2;
+}
+
+/* Screen window (beneath frame if transparent) */
+.tv-screen {
+  position: absolute;
+  top: var(--tv-screen-top);
+  left: var(--tv-screen-left);
+  width: var(--tv-screen-width);
+  height: var(--tv-screen-height);
+  background: #000;
+  overflow: hidden;
+  border-radius: 4px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  isolation: isolate;
+}
+
+.tv-screen-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+  pointer-events: none;
+  will-change: opacity;
+}
+
+/* Debug outline toggle (press D) */
+.about-page.debug-screen .tv-screen {
+  outline: 2px dashed rgba(255, 80, 80, 0.7);
+}
+
+/* If transparency NOT present (force screen above) — add class manually if needed */
+.about-page.tv-opaque .tv-screen {
+  z-index: 3;
+}
+.about-page.tv-opaque .tv-frame {
+  z-index: 1;
+}
+
+/* TEXT LAYOUTS */
+.scene-text {
+  position: absolute;
+  z-index: 20;
+  line-height: 1.18;
+  letter-spacing: 0.2px;
+  max-width: 50ch;
+  will-change: opacity, transform;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Hero */
+.hero-left {
+  top: 16vh;
+  left: 6vw;
+  max-width: 22ch;
+}
+
+.hero-title {
+  margin: 0 0 28px;
+  font-size: clamp(3.4rem, 7.4vw, 6.8rem);
+  line-height: 0.9;
+  font-family: jetbrains-mono, ui-monospace, monospace;
+  font-weight: 600;
+  letter-spacing: -1px;
+}
+
+.hero-cta {
+  background: none;
+  border: none;
+  font: inherit;
+  padding: 0;
+  cursor: pointer;
+  font-size: clamp(1rem, 1.4vw, 1.35rem);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  transition: color 0.3s ease;
+}
+.hero-cta-arrow {
+  display: inline-block;
+  transition: transform 0.4s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+.hero-cta:hover .hero-cta-arrow {
+  transform: translateY(5px);
+}
+.hero-cta:hover {
+  color: #402d27;
+}
+
+/* Column body scenes */
+.column-left {
+  top: 20vh;
+  left: 6.5vw;
+  max-width: 50ch;
+}
+
+.talk-left {
+  top: 16vh;
+  left: 6.5vw;
+  max-width: 50ch;
+}
+
+.center-under {
+  top: 55vh;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  max-width: 60ch;
+}
+
+/* Text blocks */
+.text-block {
+  font-size: clamp(0.95rem, 1.06vw, 1.16rem);
+  opacity: 0.92;
+  color: #151618;
+}
+.text-block p {
+  margin: 0 0 1.05rem;
+}
+.text-block.center {
+  font-size: clamp(0.92rem, 1.05vw, 1.1rem);
+}
+
+/* Talk scene specifics */
+.talk-heading {
+  margin: 0 0 1rem;
+  font-size: clamp(2.4rem, 4.3vw, 3.4rem);
+  font-family: jetbrains-mono, ui-monospace, monospace;
+  line-height: 1.02;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.talk-list {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  font-size: clamp(0.9rem, 1.04vw, 1.14rem);
+}
+.talk-list li {
+  position: relative;
+  padding-left: 1.15rem;
+  margin: 0 0 0.55rem;
+}
+.talk-list li::before {
+  content: "▹";
+  position: absolute;
+  left: 0;
+  top: 0.15rem;
+  font-size: 0.8rem;
+  color: #d58c35;
+}
+.talk-closing {
+  margin: 1.15rem 0 0;
+  font-weight: 600;
+  font-size: clamp(0.95rem, 1.08vw, 1.18rem);
+  color: #222;
+}
+
+/* Navigation arrows */
+.about-nav {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 40;
+}
+.about-nav-top {
+  top: 6px;
+}
+.about-nav-bottom {
+  bottom: 12px;
+}
+.about-nav button {
+  background: none;
+  border: none;
+  font-size: 26px;
+  line-height: 1;
+  font-weight: 700;
+  cursor: pointer;
+  color: #111;
+  padding: 4px 8px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+.about-nav-top button:hover:not(:disabled) {
+  transform: translateY(-3px);
+}
+.about-nav-bottom button:hover:not(:disabled) {
+  transform: translateY(3px);
+}
+.about-nav button:disabled {
+  opacity: 0.25;
+  cursor: default;
+  transform: none;
+}
+
+/* Responsive */
+@media (max-width: 1080px) {
+  .tv-wrapper {
+    width: clamp(380px, 50vw, 620px);
+  }
+  .hero-title {
+    font-size: clamp(3.2rem, 8vw, 6rem);
+  }
+}
+
+@media (max-width: 820px) {
+  .tv-wrapper {
+    width: clamp(340px, 58vw, 560px);
+  }
+  .hero-left {
+    top: 14vh;
+  }
+  .column-left {
+    top: 18vh;
+  }
+  .talk-left {
+    top: 15vh;
+  }
+  .center-under {
+    top: 56vh;
+  }
+}
+
+@media (max-width: 700px) {
+  .about-page {
+    padding: 120px 20px 70px;
+  }
+  .tv-wrapper {
+    position: relative;
+    left: 50% !important;
+    top: 0 !important;
+    transform: translateX(-50%);
+    margin-top: 6px;
+    width: clamp(320px, 78vw, 520px);
+  }
+  .scene-text {
+    position: relative;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    max-width: 60ch;
+    text-align: center;
+    margin: 30px auto 0;
+  }
+  .hero-title {
+    font-size: clamp(2.6rem, 12vw, 4.4rem);
+  }
+  .text-block {
+    font-size: 0.95rem;
+  }
+  .talk-heading {
+    font-size: clamp(2.1rem, 11vw, 2.9rem);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .tv-wrapper {
+    transition: none !important;
+  }
+}

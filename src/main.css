@@ -19,12 +19,11 @@ html,
   overflow: visible;
 }
 
-/* Page styling */
 .page-wrapper {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  /* remove height:100% & centering */
+  min-height: 100vh;
+  display: block; /* block flow so pages size naturally */
+  padding-top: 0; /* page components already have their own padding */
 }
 
 .page {

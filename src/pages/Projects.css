@@ -33,7 +33,6 @@
   /* OLD: height: 100%;  (remove so natural height + min-height works) */
   min-height: 100vh;
   color: #e9e2cf;
-  align-self: flex-start; /* opt out of parent vertical centering */
 }
 
 /* ---------- LEFT LIST ---------- */
