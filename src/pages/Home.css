@@ -10,9 +10,9 @@
 
 .room-wrapper {
   position: relative;
-  height: 115vh; /* 30% taller than screen */
+  height: 100vh; /* 30% taller than screen */
   aspect-ratio: 16 / 9;
-  bottom: 30%;
+  bottom: 25%;
   will-change: transform; /* added for smoother rise */
 }
 
@@ -110,4 +110,14 @@
   left: 37%;
   width: 27%;
   pointer-events: none;
+}
+
+/* Domain 3D text (adjust values as needed) */
+.ankersandgithub {
+  position: absolute;
+  bottom: 39%; /* tweak */
+  left: 27%; /* tweak */
+  width: 15%; /* tweak */
+  pointer-events: none;
+  z-index: 5;
 }

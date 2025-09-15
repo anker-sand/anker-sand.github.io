@@ -1,4 +1,5 @@
 import roomBase from "../assets/images/room/theroom.png";
+import ankersandgithub from "../assets/images/room/anker-sand.github_3dtext.png";
 import desk from "../assets/images/room/desk.png";
 import meinchair from "../assets/images/room/meinchair.png";
 import projectwall from "../assets/images/room/projectwall.png";
@@ -49,6 +50,14 @@ export default function Home({ onNavigate }) {
         <img src={plant} className="plant" />
         <img src={bookcase} className="bookcase" />
         <img src={rug} className="rug" />
+
+        {/* 3D text PNG (domain) */}
+        <img
+          src={ankersandgithub}
+          alt="anker-sand.github.io"
+          className="ankersandgithub"
+          draggable="false"
+        />
 
         {/* Mail now interactive -> Contact page */}
         <InteractiveObject
