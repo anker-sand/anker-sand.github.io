@@ -7,20 +7,33 @@
   font-family: "Inter", system-ui, sans-serif;
   color: #111;
   overflow: hidden;
-  align-self: flex-start;
 }
 
-/* Screen window calibration:
-   Adjust these four ONLY if the artwork changes.
-   They are percentages of the frame's bounding box. */
-:root {
+/* Scoped variables (no global :root pollution) */
+.about-page {
+  /* TV screen window (percent of frame box) */
   --tv-screen-top: 37%;
   --tv-screen-left: 38%;
   --tv-screen-width: 24%;
   --tv-screen-height: 24%;
+
+  /* Text position offsets */
+  --hero-left-top: 30vh;
+  --hero-left-left: 15vw;
+
+  --col-left-top: 40vh;
+  --col-left-left: 15.5vw;
+
+  --center-under-top: 55vh;
+
+  --talk-left-top: 16vh;
+  --talk-left-left: 6.5vw;
+
+  --text-nudge-x: 0px;
+  --text-nudge-y: 0px;
 }
 
-/* Bigger TV base size */
+/* TV */
 .tv-wrapper {
   position: absolute;
   width: clamp(420px, 36vw, 680px);
@@ -30,19 +43,17 @@
   will-change: left, top, transform, opacity;
 }
 
-/* Frame (alpha video) */
 .tv-frame {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  display: block;
   object-fit: contain;
-  z-index: 2; /* Above screen when transparent */
+  display: block;
+  z-index: 2;
   pointer-events: none;
 }
 
-/* If video fails */
 .tv-frame-fallback {
   position: absolute;
   inset: 0;
@@ -52,7 +63,6 @@
   z-index: 2;
 }
 
-/* Screen window (beneath frame if transparent) */
 .tv-screen {
   position: absolute;
   top: var(--tv-screen-top);
@@ -66,7 +76,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  isolation: isolate;
 }
 
 .tv-screen-img {
@@ -75,40 +84,41 @@
   object-fit: cover;
   user-select: none;
   pointer-events: none;
-  will-change: opacity;
 }
 
-/* Debug outline toggle (press D) */
-.about-page.debug-screen .tv-screen {
-  outline: 2px dashed rgba(255, 80, 80, 0.7);
-}
-
-/* If transparency NOT present (force screen above) — add class manually if needed */
-.about-page.tv-opaque .tv-screen {
-  z-index: 3;
-}
-.about-page.tv-opaque .tv-frame {
-  z-index: 1;
-}
-
-/* TEXT LAYOUTS */
+/* Text layouts */
 .scene-text {
   position: absolute;
   z-index: 20;
   line-height: 1.18;
   letter-spacing: 0.2px;
-  max-width: 50ch;
-  will-change: opacity, transform;
+  max-width: 120ch;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Hero */
 .hero-left {
-  top: 16vh;
-  left: 6vw;
-  max-width: 22ch;
+  top: calc(var(--hero-left-top) + var(--text-nudge-y));
+  left: calc(var(--hero-left-left) + var(--text-nudge-x));
 }
 
+.column-left {
+  top: calc(var(--col-left-top) + var(--text-nudge-y));
+  left: calc(var(--col-left-left) + var(--text-nudge-x));
+}
+
+.center-under {
+  top: calc(var(--center-under-top) + var(--text-nudge-y));
+  /* horizontal centering handled by motion x with left:50% inline */
+  text-align: center;
+  max-width: 60ch;
+}
+
+.talk-left {
+  top: calc(var(--talk-left-top) + var(--text-nudge-y));
+  left: calc(var(--talk-left-left) + var(--text-nudge-x));
+}
+
+/* Typography */
 .hero-title {
   margin: 0 0 28px;
   font-size: clamp(3.4rem, 7.4vw, 6.8rem);
@@ -116,6 +126,10 @@
   font-family: jetbrains-mono, ui-monospace, monospace;
   font-weight: 600;
   letter-spacing: -1px;
+  color: #d6ae56;
+  font-weight: 600;
+  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.1);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6), -1px -1px 2px rgba(0, 0, 0, 0.25);
 }
 
 .hero-cta {
@@ -124,13 +138,14 @@
   font: inherit;
   padding: 0;
   cursor: pointer;
-  font-size: clamp(1rem, 1.4vw, 1.35rem);
+  font-size: clamp(2rem, 1.4vw, 2.35rem);
   font-weight: 600;
   letter-spacing: 0.5px;
   display: inline-flex;
-  gap: 6px;
+  gap: 10px;
   align-items: center;
   transition: color 0.3s ease;
+  color: #ffffff;
 }
 .hero-cta-arrow {
   display: inline-block;
@@ -140,35 +155,15 @@
   transform: translateY(5px);
 }
 .hero-cta:hover {
-  color: #402d27;
+  color: #ffb049;
 }
 
-/* Column body scenes */
-.column-left {
-  top: 20vh;
-  left: 6.5vw;
-  max-width: 50ch;
-}
-
-.talk-left {
-  top: 16vh;
-  left: 6.5vw;
-  max-width: 50ch;
-}
-
-.center-under {
-  top: 55vh;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  max-width: 60ch;
-}
-
-/* Text blocks */
 .text-block {
-  font-size: clamp(0.95rem, 1.06vw, 1.16rem);
-  opacity: 0.92;
-  color: #151618;
+  font-size: clamp(1.05rem, 2.06vw, 1.4rem);
+  line-height: 1.2;
+  font-weight: 500;
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 .text-block p {
   margin: 0 0 1.05rem;
@@ -177,7 +172,6 @@
   font-size: clamp(0.92rem, 1.05vw, 1.1rem);
 }
 
-/* Talk scene specifics */
 .talk-heading {
   margin: 0 0 1rem;
   font-size: clamp(2.4rem, 4.3vw, 3.4rem);
@@ -213,7 +207,7 @@
   color: #222;
 }
 
-/* Navigation arrows */
+/* Navigation */
 .about-nav {
   position: absolute;
   left: 50%;
