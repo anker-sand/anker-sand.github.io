@@ -2,9 +2,9 @@
   {
     "id": "cille-cyklus",
     "title": "Cille Cyklus",
-    "subtitle": "Interactive menstrual cycle",
-    "description": "Go on a journey with Cille Cyklus as you explore the inner aspects of womanhood.",
-    "credits": "Made in cooperation with Steno Museum in Denmark.",
+    "subtitle": "Interactive storytelling about the menstrual cycle",
+    "description": "Digital. storytelling project about the menstrual cycle, focusing on emotions, breaking taboos and providing information about menstruation through interactive storytelling.",
+    "credits": "Digital storytelling, interaction design, illustration, animation, javascript",
     "url": "https://anker-sand.github.io/CilleCyklus_eksamensprojekt2025/",
     "images": [
       "/assets/projects/cillecyklus/cille_1.png",
@@ -12,12 +12,30 @@
       "/assets/projects/cillecyklus/cille_3.png"
     ]
   },
+
   {
-    "id": "radar-live",
-    "title": "radar_live",
-    "subtitle": "Live performance visuals",
-    "description": "Generative visuals driven by audio input for club environments.",
-    "credits": "Custom shaders, audio-reactive pipelines.",
-    "images": ["/assets/projects/radar_1.jpg", "/assets/projects/radar_2.jpg"]
+    "id": "Zero-buzz",
+    "title": "Zero Buzz",
+    "subtitle": "Non alcoholic beer",
+    "description": "branding and website for a fictional non-alcoholic beer. The project included designing the beer can, creating a logo, and developing a website to promote the product.",
+    "credits": "Handdrawn animation, Custom beer designer, branding, webdesign, infographic, ",
+    "url": "https://anker-sand.github.io/Zero_buzz_projekt/",
+    "images": [
+      "/assets/projects/zerobuzz/zero_1.png",
+      "/assets/projects/zerobuzz/zero_2.png",
+      "/assets/projects/zerobuzz/zero_3.png"
+    ]
+  },
+
+  {
+    "id": "radar_live",
+    "title": "Radar live",
+    "subtitle": "Redesigning a concert venue",
+    "description": "A parallax scrolling site for the concert venue radar live in Aarhus, Denmark.",
+    "credits": "Parallax scroll, mobile responsive",
+    "images": [
+      "/assets/projects/radar/radar_1.png",
+      "/assets/projects/radar/radar_2.png"
+    ]
   }
 ]

@@ -419,3 +419,104 @@
     transition: none;
   }
 }
+
+/* Add near end of file */
+
+.resolution-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 16, 12, 0.62);
+  backdrop-filter: blur(4px) saturate(1.1);
+  -webkit-backdrop-filter: blur(4px) saturate(1.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4000;
+}
+
+.resolution-modal {
+  position: relative;
+  width: min(420px, 90%);
+  background: linear-gradient(165deg, #2d2520, #1d1814);
+  border: 1px solid rgba(255, 220, 170, 0.18);
+  border-radius: 14px;
+  padding: 28px 26px 30px;
+  box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.55),
+    0 2px 10px rgba(0, 0, 0, 0.35);
+  color: #f2e6d2;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+.resolution-modal h3 {
+  margin: 0 0 12px;
+  font-size: 1.45rem;
+  font-family: jetbrains-mono, monospace;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: #d9a669;
+}
+
+.resolution-modal-msg {
+  font-size: 0.98rem;
+  line-height: 1.45;
+  margin: 0 0 22px;
+  color: #f0e2ce;
+}
+
+.resolution-modal-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.res-btn {
+  appearance: none;
+  border: 1px solid #b08a54;
+  background: rgba(217, 166, 105, 0.15);
+  color: #f2e6d2;
+  font-family: jetbrains-mono, monospace;
+  font-size: 0.85rem;
+  padding: 10px 18px;
+  letter-spacing: 0.5px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.25s ease, transform 0.18s ease, box-shadow 0.25s ease;
+}
+.res-btn.primary {
+  background: linear-gradient(135deg, #d9a669, #b47529);
+  color: #261a11;
+  border: 1px solid #d9a669;
+  box-shadow: 0 3px 14px -5px rgba(217, 166, 105, 0.55);
+}
+.res-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: rgba(217, 166, 105, 0.28);
+}
+.res-btn.primary:hover {
+  background: linear-gradient(135deg, #e2b676, #bf7d2f);
+}
+.res-btn:active {
+  transform: translateY(0);
+}
+
+.resolution-modal-close {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  width: 34px;
+  height: 34px;
+  border: none;
+  background: none;
+  color: #d9a669;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  font-weight: 400;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+.resolution-modal-close:hover {
+  color: #f4d8a6;
+  transform: scale(1.1);
+}

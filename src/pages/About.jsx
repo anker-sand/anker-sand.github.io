@@ -35,26 +35,33 @@ const SCENES = [
   },
   {
     id: 2,
-    tv: { left: "55vw", top: "25vh", scale: 1.55 },
+    tv: { left: "52vw", top: "20vh", scale: 1.55 },
     layout: "column-left",
     screenSrc: scene2,
     content: (
-      <div className="text-block">
+      <div className="text-block about-dev">
+        <h2 className="section-heading">Who am i?</h2>
         <p>
-          I’m a frontend web developer based in Denmark,
-          <br />
-          passionate about design, code, <br />
-          and turning ideas into interactive experiences.
+          My name is Anker, I’m a 25 year old frontend web developer based in
+          Denmark, passionate about design, code, visual identity and
+          interactive experiences.
         </p>
-        <p>
-          For me, creativity is about building worlds <br />
-          — digital spaces that people can step into and explore. <br />
-          Websites should feel alive, spark curiosity, and invite interaction.
+        <p className="callout">
+          For me, web design can also be digital worlds that people step into
+          and explore.
         </p>
+        <ul className="tech-tags">
+          <li>React</li>
+          <li>JavaScript (ESNext)</li>
+          <li>HTML / CSS</li>
+          <li>Framer Motion</li>
+          <li>Figma</li>
+          <li>Adobe Suite</li>
+          <li>Procreate</li>
+        </ul>
         <p>
-          I work mainly with <strong>React, HTML, CSS, and JavaScript</strong>,
-          <br />
-          but i'm always to learn new tools and approaches.
+          Though I always have many ideas, my focus lies within the context of
+          the users, the client, and the project goals.
         </p>
       </div>
     ),
@@ -67,9 +74,9 @@ const SCENES = [
     content: (
       <div className="text-block center">
         <p>
-          Outside of coding, I’ve spent countless hours producing music and
-          playing instruments. Creating my own little musical worlds taught me
-          attention to detail and how fine-tuned elements shape the experience
+          Outside of coding, I’ve spent many hours producing music and playing
+          instruments. Creating my own little musical worlds taught me attention
+          to detail and how fine-tuned elements shape the experience
         </p>
         <p>
           in the end it’s how everything comes together that truly matters. - I
@@ -80,20 +87,26 @@ const SCENES = [
   },
   {
     id: 4,
-    tv: { left: "56vw", top: "11vh", scale: 1.1 },
+    tv: { left: "52vw", top: "19vh", scale: 1.8 },
     layout: "talk-left",
     screenSrc: scene4,
     content: (
       <div className="text-block">
         <h2 className="talk-heading">Lets Talk!</h2>
         <ul className="talk-list">
-          <li>I’m currently looking for an internship</li>
-          <li>Grow as a developer & collaborate</li>
-          <li>Contribute to real projects</li>
-          <li>Bring curiosity & creative energy</li>
-          <li>Always open to a quick chat</li>
+          <h3>
+            {" "}
+            I’m currently looking for an internship <br />
+            where I can grow as a developer, contribute to real projects, <br />
+            and collaborate with others. <br />
+            <br />
+            I’m excited to learn whatever i can from experienced teams <br />
+          </h3>
         </ul>
-        <p className="talk-closing">Feel free to contact me about anything.</p>
+        <p className="talk-closing">
+          If you have any inquiry, feel free to contact me! <br /> my inbox is
+          always open{" "}
+        </p>
       </div>
     ),
   },
@@ -191,36 +204,39 @@ export default function About() {
         aria-hidden="true"
         style={{ left: scene.tv.left, top: scene.tv.top }}
       >
-        <div className="tv-screen">
-          <AnimatePresence mode="wait">
-            <motion.img
-              key={scene.id}
-              src={scene.screenSrc}
-              alt=""
-              className="tv-screen-img"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              draggable={false}
-            />
-          </AnimatePresence>
+        {/* Floating inner wrapper so CSS animation does not clash with Framer Motion */}
+        <div className="tv-float">
+          <div className="tv-screen">
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={scene.id}
+                src={scene.screenSrc}
+                alt=""
+                className="tv-screen-img"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                draggable={false}
+              />
+            </AnimatePresence>
+          </div>
+          {!videoError ? (
+            <video
+              className="tv-frame"
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              onError={() => setVideoError(true)}
+            >
+              <source src={AngelTVWebm} type="video/webm" />
+            </video>
+          ) : (
+            <div className="tv-frame-fallback" />
+          )}
         </div>
-        {!videoError ? (
-          <video
-            className="tv-frame"
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            onError={() => setVideoError(true)}
-          >
-            <source src={AngelTVWebm} type="video/webm" />
-          </video>
-        ) : (
-          <div className="tv-frame-fallback" />
-        )}
       </motion.div>
 
       {/* Scene text */}
