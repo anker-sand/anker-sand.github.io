@@ -10,7 +10,7 @@
 
 .room-wrapper {
   position: relative;
-  height: 120vh; /* 30% taller than screen */
+  height: 125vh; /* 30% taller than screen */
   aspect-ratio: 16 / 9;
   bottom: 29%;
   will-change: transform; /* added for smoother rise */
