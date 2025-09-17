@@ -15,6 +15,7 @@ import InteractiveObject from "../components/Room/objects/InteractiveObject";
 import "./Home.css";
 import { motion } from "framer-motion"; // <-- added
 import { useEffect, useState } from "react";
+import meow from "../assets/audio/MEOW.wav";
 
 export default function Home({ onNavigate }) {
   // Right wall text content and typewriter state (with pauses)
@@ -152,7 +153,7 @@ export default function Home({ onNavigate }) {
         <img src={door} className="door" />
       </motion.div>
       {/* Hidden audio element (user will add source later) */}
-      <audio id="meow-audio" preload="auto" />
+      <audio id="meow-audio" src={meow} preload="auto" />
     </div>
   );
 }
