@@ -3,7 +3,7 @@
     "id": "cille-cyklus",
     "title": "Cille Cyklus",
     "subtitle": "Interactive storytelling about the menstrual cycle",
-    "description": "Digital. storytelling project about the menstrual cycle, focusing on emotions, breaking taboos and providing information about menstruation through interactive storytelling.",
+    "description": "Digital storytelling finals exam project about the menstrual cycle, focusing on emotions, breaking taboos and providing information about menstruation through interactive storytelling. It was a group project, and included a 80 page paper, hand drawn illustrations, animations and a finished product.",
     "credits": "Digital storytelling, interaction design, illustration, animation, javascript",
     "url": "https://anker-sand.github.io/CilleCyklus_eksamensprojekt2025/",
     "images": [
@@ -33,9 +33,23 @@
     "subtitle": "Redesigning a concert venue",
     "description": "A parallax scrolling site for the concert venue radar live in Aarhus, Denmark.",
     "credits": "Parallax scroll, mobile responsive",
+    "url": "https://anker-sand.github.io/RADAR/",
     "images": [
       "/assets/projects/radar/radar_1.png",
       "/assets/projects/radar/radar_2.png"
+    ]
+  },
+
+  {
+    "id": "signal",
+    "title": "Signal",
+    "subtitle": "fun little game",
+    "description": "A very small game made in just a few days, for a school project. It has a fun little audio / visual puzzle, Mostly I am happy with the intro theme song I made for the game.",
+    "credits": "sound design, click adventure, puzzle",
+    "url": "https://anker-sand.github.io/Signal_game_project/",
+    "images": [
+      "/assets/projects/signal/signal_1.png",
+      "/assets/projects/signal/signal_2.png"
     ]
   }
 ]
