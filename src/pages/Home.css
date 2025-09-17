@@ -10,9 +10,9 @@
 
 .room-wrapper {
   position: relative;
-  height: 100vh; /* 30% taller than screen */
+  height: 120vh; /* 30% taller than screen */
   aspect-ratio: 16 / 9;
-  bottom: 25%;
+  bottom: 29%;
   will-change: transform; /* added for smoother rise */
 }
 
@@ -34,16 +34,18 @@
 /* Overlay objects positioned relative to the wrapper */
 .desk {
   position: absolute;
-  top: 18%;
-  left: 34%;
-  width: 17.5%;
+  top: 16%;
+  left: 35%;
+  width: 18%;
+  z-index: 2;
 }
 
 .meinchair {
   position: absolute;
-  bottom: 60.9%;
-  left: 39.5%;
-  width: 6.25%;
+  bottom: 62.9%;
+  left: 41%;
+  width: 6.35%;
+  z-index: 3;
 }
 
 .projectwall {
@@ -66,7 +68,7 @@
   position: absolute;
   bottom: 58%;
   left: 28%;
-  width: 7%;
+  width: 8%;
   pointer-events: none;
 }
 
@@ -88,11 +90,11 @@
 
 .bookcase {
   position: absolute;
-  top: 10%;
-  right: 50%;
-  width: 4.3%;
+  top: 8.4%;
+  right: 49.6%;
+  width: 4.6%;
   pointer-events: none;
-  display: none;
+  z-index: 1;
 }
 
 /* mail already positioned; keep dimensions similar to before */
@@ -107,8 +109,8 @@
 .rug {
   position: absolute;
   bottom: 52%;
-  left: 37%;
-  width: 27%;
+  left: 38%;
+  width: 24%;
   pointer-events: none;
 }
 
@@ -120,4 +122,85 @@
   width: 15%; /* tweak */
   pointer-events: none;
   z-index: 5;
+}
+
+/* Cat tail video: positioned over chair, looped, clickable (no tooltip) */
+.cat-tail {
+  position: absolute;
+  /* Default placement roughly on the chair; tweak via CSS variables if needed */
+  left: var(--cat-left, 21.8%);
+  bottom: var(--cat-bottom, 50.8%);
+  width: var(--cat-width, 22%);
+  z-index: 6; /* above chair */
+  pointer-events: none; /* video itself won't intercept clicks */
+  border-radius: 10px; /* soften edges if any aliasing */
+  transition: filter 0.15s ease;
+}
+
+/* Optional hover hint could be applied to hotspot if desired */
+
+/* Invisible smaller clickable hotspot placed above the video */
+.cat-tail-hotspot {
+  position: absolute;
+  left: var(--cat-hot-left, 26%);
+  bottom: var(--cat-hot-bottom, 52%);
+  width: var(--cat-hot-width, 8%);
+  height: var(--cat-hot-height, 14%);
+  z-index: 7; /* above video */
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  border: red 0px solid; /* debug */
+}
+
+.cube-right-text {
+  position: absolute;
+  right: 25.2%;
+  top: var(--cube-right-top, 43%);
+  width: 22%;
+  color: #be8f5c;
+  font-family: "Lucida Console", Monaco, monospace;
+  font-size: clamp(10px, 1.4vw, 25px);
+  line-height: 1.1;
+  white-space: pre-wrap;
+  letter-spacing: 0.02em;
+  pointer-events: none;
+  z-index: 2;
+  transform-origin: top right;
+
+  /* Perspective-tuned transforms */
+  transform: perspective(2100px) rotateY(400deg) rotateX(0deg) skewY(-17.7deg);
+
+  text-shadow: 0 0.5px 0 rgba(0, 0, 0, 0.15);
+  border: red 0px solid; /* debug */
+}
+
+/* blinking caret at end of typed text */
+.cube-right-text .caret {
+  display: inline-block;
+  margin-left: 2px;
+  animation: caret-blink 2.5s steps(1, end) infinite;
+}
+
+@keyframes caret-blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .cube-right-text {
+    right: 12%;
+    top: var(--cube-right-top-sm, 24%);
+    width: 28%;
+    font-size: clamp(9px, 2.2vw, 14px);
+    transform: skewY(-8deg) rotateY(-16deg) rotateZ(-2deg);
+  }
 }
