@@ -15,7 +15,7 @@ import scene4 from "../assets/images/about/scene4.png";
 const SCENES = [
   {
     id: 1,
-    tv: { left: "54vw", top: "17vh", scale: 1.8 },
+    tv: { left: "54vw", top: "17vh", scale: 1.2 },
     layout: "hero-left",
     screenSrc: scene1,
     content: (
@@ -23,9 +23,7 @@ const SCENES = [
         <h1 className="hero-title">
           Hello,
           <br />
-          i'm a web
-          <br />
-          developer
+          i'm a web developer
         </h1>
         <button className="hero-cta" data-next>
           About me <span className="hero-cta-arrow">▼</span>
@@ -42,27 +40,26 @@ const SCENES = [
       <div className="text-block about-dev">
         <h2 className="section-heading">Who am i?</h2>
         <p>
-          My name is Anker, I’m a 25 year old frontend web developer based in
-          Denmark, passionate about design, code, visual identity and
-          interactive experiences.
+          My name is Anker, a 25-year-old frontend developer from Denmark with a
+          passion for design, code, visual identity and interactive experiences.
+          <br />
+          <br /> I enjoy pushing creative boundaries and exploring new ways to
+          bring ideas to life. At the same time, I strive to keep my work
+          intuitive and purposeful—always putting users and project goals at the
+          center of the process.
         </p>
         <p className="callout">
-          For me, web design can also be digital worlds that people step into
-          and explore.
+          For me, web design should spark curiosity and invite interaction.
         </p>
         <ul className="tech-tags">
           <li>React</li>
           <li>JavaScript (ESNext)</li>
           <li>HTML / CSS</li>
-          <li>Framer Motion</li>
           <li>Figma</li>
-          <li>Adobe Suite</li>
+          <li>Adobe suite</li>
           <li>Procreate</li>
+          <li>Ableton Live</li>
         </ul>
-        <p>
-          Though I always have many ideas, my focus lies within the context of
-          the users, the client, and the project goals.
-        </p>
       </div>
     ),
   },
@@ -81,6 +78,16 @@ const SCENES = [
         <p>
           in the end it’s how everything comes together that truly matters. - I
           carry that same mindset into web development
+        </p>
+
+        <p>
+          {" "}
+          <p>
+            For me, web design can also be digital worlds that people step into
+            and explore. <br />
+            But although I always have many ideas, my focus lies within the
+            context of the users, the client, and the project goals.
+          </p>
         </p>
       </div>
     ),

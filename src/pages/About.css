@@ -25,12 +25,12 @@
 
   /* ===== Scene text offsets (per layout) ===== */
   --hero-left-top: 24vh;
-  --hero-left-left: 9vw;
+  --hero-left-left: 15vw;
 
-  --column-left-top: 28vh;
+  --column-left-top: 25vh;
   --column-left-left: 17vw;
 
-  --center-under-top: 58vh;
+  --center-under-top: 8vh;
 
   --talk-left-top: 26vh;
   --talk-left-left: 13vw;
@@ -263,12 +263,21 @@
 .hero-title {
   margin: 0 0 28px;
   font-size: var(--hero-title-size);
-  line-height: 0.9;
-  font-family: var(--font-stack-mono);
+  line-height: 0.92;
+  font-family: roboto-mono, ui-monospace, monospace;
   font-weight: 600;
-  letter-spacing: -1px;
-  color: var(--color-body-strong);
-  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.45);
+  letter-spacing: 1px;
+  color: #d5e7d8;
+
+  /* New: stronger separation and balanced wrapping */
+  position: relative;
+  display: inline-block; /* let the scrim hug the text */
+  padding: 6px 10px; /* room for scrim */
+  text-wrap: balance; /* nicer multi-line breaks */
+
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.55), 0 0 2px rgba(0, 0, 0, 0.85);
+
+  border: none; /* remove debug */
 }
 
 .hero-cta {
@@ -297,31 +306,35 @@
 }
 
 .text-block {
-  font-size: clamp(0.95rem, 1.06vw, 1.16rem);
+  font-size: clamp(0.95rem, 1.06vw, 1.26rem);
   opacity: 0.94;
   color: var(--color-body);
 }
 .text-block p {
-  margin: 0 0 1.05rem;
+  margin: 0 0 2.05rem;
+  line-height: 1.15;
+  color: var(--color-body);
+  font-weight: 400;
+  font-size: 23px;
+  text-shadow: #000 0px 1px 1px;
 }
 
 /* Optional Scene 2 helpers if you added them */
 .section-heading {
-  margin: 0 0 0.75rem;
+  margin: 0 0 1rem;
+  font-size: var(--talk-heading-size);
   font-family: var(--font-stack-mono);
-  font-size: var(--section-heading-size);
-  line-height: 1.05;
-  letter-spacing: 1px;
-  background: linear-gradient(90deg, #ffdca8, #ffb155 55%, #e07a1f);
-  -webkit-background-clip: text;
-  color: transparent;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+  line-height: 1.02;
+  font-weight: 200;
+  letter-spacing: 0.5px;
+  color: var(--color-body-strong);
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 .about-dev .callout {
   margin: 1rem 0 1.25rem;
   padding: 0.85rem 1rem 0.9rem;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.28);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-left: 5px solid var(--color-accent);
   border-radius: 8px;
