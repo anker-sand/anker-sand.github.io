@@ -61,6 +61,56 @@ function WallText({ text }) {
 export default function Home({ onNavigate }) {
   // Right wall text content (kept constant); rendering moved to memoized child to avoid whole-page rerenders
   const wallText = `Welcome to my digital room, where i make my projects.\n\nMake yourself at home...`;
+  const [ready, setReady] = useState(false);
+
+  // Preload all layered images before revealing the room cube
+  useEffect(() => {
+    let cancelled = false;
+    const sources = [
+      roomBase,
+      desk,
+      meinchair,
+      projectwall,
+      door,
+      mail,
+      chair,
+      doormat,
+      plant,
+      bookcase,
+      rug,
+      ankersandgithub,
+    ];
+
+    const preloadImage = (src) =>
+      new Promise((resolve) => {
+        let done = false;
+        const finish = () => {
+          if (done) return; // guard multiple resolves (onload + decode)
+          done = true;
+          resolve(src);
+        };
+        const img = new Image();
+        img.onload = finish;
+        img.onerror = finish;
+        img.src = src;
+        if (img.decode) {
+          img.decode().then(finish).catch(finish);
+        }
+      });
+
+    const maxWait = document.documentElement.classList.contains("perf-low")
+      ? 2500
+      : 4200;
+
+    const all = Promise.allSettled(sources.map(preloadImage));
+    const timeout = new Promise((r) => setTimeout(r, maxWait));
+    Promise.race([all, timeout]).then(() => {
+      if (!cancelled) setReady(true);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
   // Click handler to play meow when audio is provided later
   const playMeow = () => {
     const el = document.getElementById("meow-audio");
@@ -76,11 +126,15 @@ export default function Home({ onNavigate }) {
       <motion.div
         className="room-wrapper"
         initial={{ y: 160, opacity: 0 }}
-        animate={{
-          y: 0,
-          opacity: 1,
-          transition: { duration: 0.6, ease: "easeOut", delay: 0.15 },
-        }}
+        animate={
+          ready
+            ? {
+                y: 0,
+                opacity: 1,
+                transition: { duration: 0.6, ease: "easeOut", delay: 0.15 },
+              }
+            : { y: 160, opacity: 0 }
+        }
       >
         <img
           src={roomBase}
