@@ -13,7 +13,7 @@
 .nav-icon {
   width: clamp(40px, 5vw, 70px);
   height: clamp(40px, 5vw, 70px);
-  color: #c4a7a7;
+  color: #d39459bd;
   cursor: none !important; /* custom cursor */
   transition: transform 0.18s ease;
 }

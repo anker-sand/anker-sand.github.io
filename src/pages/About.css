@@ -32,11 +32,11 @@
   --hero-center-left-offset: -25%; /* +/- to nudge horizontally */
 
   --column-left-top: 20vh;
-  --column-left-left: 11vw;
+  --column-left-left: 13vw;
 
   --center-under-top: 52vh;
 
-  --talk-left-top: 26vh;
+  --talk-left-top: 32vh;
   --talk-left-left: 13vw;
 
   /* Global micro‑nudges for all scenes */
@@ -45,7 +45,7 @@
 
   /* Widths */
   --text-max-width: 79ch;
-  --text-max-width-center: 60ch;
+  --text-max-width-center: 80ch;
 
   /* ===== Typography / colors ===== */
   --font-stack-body: "montserrat", system-ui, sans-serif;
@@ -53,7 +53,7 @@
 
   --color-body: #f2e6d2;
   --color-body-strong: #f2e6d2;
-  --color-accent: #ecb858;
+  --color-accent: #ffffff;
 
   --hero-title-size: clamp(3.2rem, 9vw, 7rem);
   --section-heading-size: clamp(1.7rem, 3.1vw, 4rem);
@@ -205,6 +205,45 @@
   animation: tvStaticFlicker 900ms linear infinite;
 }
 
+/* ===================== TV Contact CTA (Scene 4) ===================== */
+.tv-contact-cta {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(15, 24, 38, 0.9),
+    rgba(9, 12, 20, 0.9)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.5);
+  color: var(--color-body);
+  cursor: pointer;
+  font-family: var(--font-stack-mono);
+  text-align: center;
+}
+.tv-contact-cta .tv-contact-title {
+  font-size: clamp(1rem, 1.3vw, 1.35rem);
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+.tv-contact-cta .tv-contact-sub {
+  font-size: clamp(0.8rem, 1vw, 1rem);
+  opacity: 0.9;
+}
+.tv-contact-cta:hover {
+  border-color: rgba(255, 255, 255, 0.26);
+}
+.tv-contact-cta:active {
+  transform: scale(0.995);
+}
+
 @keyframes tvStaticNoise {
   0% {
     background-position: 0 0;
@@ -237,7 +276,9 @@
 }
 
 /* Performance overrides for low-end devices */
-:root.perf-low .scene-text.column-left {
+:root.perf-low .scene-text.column-left,
+:root.perf-low .scene-text.talk-left,
+:root.perf-low .scene-text.center-under {
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
@@ -271,6 +312,16 @@
   max-width: var(--text-max-width-center);
 }
 
+/* Scene 3: improve readability of centered paragraph copy (no backdrop) */
+.scene-text.center-under .text-block.center p {
+  /* Slight size bump, responsive across widths */
+  font-size: clamp(1.15rem, 1.35vw, 1.6rem);
+  line-height: 1.26;
+  letter-spacing: 0.2px;
+  margin: 0 0 1.15rem;
+  text-wrap: balance; /* nicer line breaks on multi-line headings */
+}
+
 /* New centered hero layout for scene 1 */
 .hero-center {
   top: calc(var(--hero-center-top) + var(--text-nudge-y));
@@ -287,7 +338,9 @@
 
 /* ========================= Typography & Components ======================== */
 /* Scene 2 panel: apply to the scene container so it envelops the title + text */
-.scene-text.column-left {
+.scene-text.column-left,
+.scene-text.talk-left,
+.scene-text.center-under {
   /* Use theme vars if present */
   background: var(--callout-bg, rgba(0, 0, 0, 0.48));
   border: 1px solid var(--callout-border, rgba(255, 255, 255, 0.12));
@@ -441,17 +494,33 @@
   font-size: var(--talk-heading-size);
   font-family: var(--font-stack-mono);
   line-height: 1.02;
-  font-weight: 600;
+  font-weight: 400; /* was 600; reduce boldness for calmer tone */
   letter-spacing: 0.5px;
-  color: var(--color-body-strong);
+  color: #d39459bd; /* requested accent color */
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 .talk-closing {
   margin: 1.15rem 0 0;
-  font-weight: 600;
-  font-size: clamp(0.95rem, 1.08vw, 1.18rem);
-  color: var(--color-body-strong);
+  font-weight: 400; /* reduce boldness for readability */
+  font-size: clamp(0.98rem, 1.08vw, 1.2rem);
+  color: var(--color-body);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
+}
+
+/* Normalize talk-list content (uses an h3 inside a list wrapper) */
+.talk-list {
+  list-style: none;
+  margin: 0 0 0.8rem;
+  padding: 0;
+}
+.talk-list h3 {
+  margin: 0;
+  font-weight: 400; /* not bold */
+  line-height: 1.22;
+  font-size: clamp(1rem, 1.25vw, 1.3rem);
+  color: var(--color-body);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
 }
 
 /* =============================== Navigation =============================== */

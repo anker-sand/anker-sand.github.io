@@ -117,7 +117,7 @@ const SCENE_COUNT = SCENES.length;
 const SCROLL_LOCK_MS = 650; // debounce between scroll scene changes
 const WHEEL_DELTA_THRESHOLD = 30;
 
-export default function About() {
+export default function About({ onNavigate }) {
   const [index, setIndex] = useState(0);
   const [videoError, setVideoError] = useState(false);
   const scene = SCENES[index];
@@ -208,19 +208,38 @@ export default function About() {
         {/* Floating inner wrapper so CSS animation does not clash with Framer Motion */}
         <div className="tv-float">
           <div className="tv-screen">
-            <AnimatePresence mode="wait">
-              <motion.img
-                key={scene.id}
-                src={scene.screenSrc}
-                alt=""
-                className="tv-screen-img"
+            {scene.id === 4 ? (
+              <motion.button
+                key="tv-contact"
+                className="tv-contact-cta"
+                onClick={() =>
+                  typeof onNavigate === "function"
+                    ? onNavigate("contact")
+                    : (window.location.href = "/contact")
+                }
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-                draggable={false}
-              />
-            </AnimatePresence>
+                transition={{ duration: 0.35, ease: "easeOut" }}
+              >
+                <span className="tv-contact-title">Contact me!</span>
+                <span className="tv-contact-sub">(click here)</span>
+              </motion.button>
+            ) : (
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={scene.id}
+                  src={scene.screenSrc}
+                  alt=""
+                  className="tv-screen-img"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  draggable={false}
+                />
+              </AnimatePresence>
+            )}
           </div>
           {!videoError ? (
             <video

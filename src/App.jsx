@@ -66,7 +66,7 @@ export default function App() {
       case "home":
         return <Home onNavigate={setActivePage} />;
       case "about":
-        return <About />;
+        return <About onNavigate={setActivePage} />;
       case "projects":
         return <Projects />;
       case "contact": // <-- ADD

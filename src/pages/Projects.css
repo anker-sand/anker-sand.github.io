@@ -10,7 +10,7 @@
   --color-accent-line: #d9a669;
 
   /* Left page heading color ("Projects") */
-  --color-page-title: #f2e6d2;
+  --color-page-title: #d8cebe;
 
   --measure: 46ch;
 
@@ -112,9 +112,9 @@
 
   /* Buttons */
   --btn-bg: rgba(37, 34, 29, 0.18);
-  --btn-border: #b6a68d;
+  --btn-border: #756b582f;
   --btn-text: #eec4a8;
-  --btn-text-strong: #ffffff;
+  --btn-text-strong: #f0ded3;
   --btn-hover-bg: rgba(217, 166, 105, 0.32);
   --btn-hover-shadow: rgba(0, 0, 0, 0.35);
   --btn-active-shadow: rgba(0, 0, 0, 0.3);
@@ -122,8 +122,8 @@
   /* List items */
   --list-item-bg: rgba(245, 155, 46, 0.18);
   --list-item-hover-bg: rgba(217, 166, 105, 0.28);
-  --list-item-active-bg: rgba(217, 167, 105, 0.87);
-  --list-item-active-text: #5f1f1f;
+  --list-item-active-bg: #d39459bd;
+  --list-item-active-text: #522c12;
   --list-item-text: #dcd4c1;
 
   /* Disabled state */
