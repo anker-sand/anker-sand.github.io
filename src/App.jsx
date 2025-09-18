@@ -7,7 +7,6 @@ const About = lazy(() => import("./pages/About"));
 const Projects = lazy(() => import("./pages/Projects"));
 const Contact = lazy(() => import("./pages/Contact"));
 import cloudsVideo from "./assets/videos/sunclouds.mp4";
-import cloudsPoster from "./assets/images/room/theroom.png";
 import "./main.css";
 import CustomCursor from "./components/CustomCursor"; // ADD
 
@@ -39,6 +38,7 @@ const pageToPath = {
 
 export default function App() {
   const [activePage, setActivePage] = useState(() => getPageFromPath());
+  // no loading overlay; keep state minimal
 
   // Keep manual to avoid browser restoring scroll in ways that look like jumps
   useEffect(() => {
@@ -51,6 +51,7 @@ export default function App() {
     if (normalizePath(window.location.pathname) !== desired) {
       history.replaceState(null, "", desired);
     }
+    // nothing extra on page switch
   }, [activePage]);
 
   // Handle back/forward
@@ -84,7 +85,6 @@ export default function App() {
         muted
         playsInline
         preload="metadata"
-        poster={cloudsPoster}
         className="background-video"
         src={cloudsVideo}
         ref={(el) => {
@@ -100,6 +100,7 @@ export default function App() {
         }}
       />
       <Navbar onNavigate={setActivePage} />
+      {/* overlay removed */}
       <div className="page-wrapper" style={{ minHeight: "100vh" }}>
         <Suspense fallback={null}>{renderPage()}</Suspense>
       </div>
