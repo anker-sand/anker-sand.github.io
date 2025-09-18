@@ -494,6 +494,29 @@
   }
 }
 
+/* Performance overrides for low-end devices (set via index.html) */
+:root.perf-low .proj-list {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+:root.perf-low .proj-item,
+:root.perf-low .proj-open-btn,
+:root.perf-low .proj-learn-btn {
+  transition: none;
+}
+:root.perf-low .depth-layer,
+:root.perf-low .depth-title,
+:root.perf-low .depth-sub,
+:root.perf-low .depth-desc,
+:root.perf-low .depth-credits,
+:root.perf-low .depth-showcase {
+  transform: none !important;
+}
+:root.perf-low .cube-showcase {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
 /* Add near end of file */
 
 .resolution-modal-overlay {

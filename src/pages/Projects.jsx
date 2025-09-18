@@ -332,7 +332,13 @@ export default function Projects() {
           }}
         >
           <div className="cube">
-            <img src={cubePng} alt="Decorative cube" className="cube-image" />
+            <img
+              src={cubePng}
+              alt="Decorative cube"
+              className="cube-image"
+              loading="lazy"
+              decoding="async"
+            />
             <div className="cube-face-warp">
               <AnimatePresence mode="wait">
                 {showText && (
@@ -393,6 +399,8 @@ export default function Projects() {
                                   animate="animate"
                                   exit="exit"
                                   draggable={false}
+                                  loading="lazy"
+                                  decoding="async"
                                 />
                               </AnimatePresence>
                             </div>

@@ -6,9 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + React</title>
     <script>
+      // Keep scroll manual to avoid jank on SPA transitions
       if ("scrollRestoration" in history) {
         history.scrollRestoration = "manual";
       }
+      // Set body classes for reduced motion and low-end devices as early as possible
+      (function () {
+        try {
+          var rm = window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+          ).matches;
+          if (rm) document.documentElement.classList.add("rm");
+          var dm = navigator.deviceMemory || 0;
+          var cores = navigator.hardwareConcurrency || 0;
+          var low = dm && dm <= 4 ? 1 : 0;
+          if (!low && cores && cores <= 4) low = 1;
+          if (low) document.documentElement.classList.add("perf-low");
+        } catch (_) {}
+      })();
     </script>
   </head>
   <body>

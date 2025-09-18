@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 // (Page transition animations removed previously)
 import Navbar from "./components/Navbar/Navbar";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Projects from "./pages/Projects";
-import Contact from "./pages/Contact"; // <-- ADD
+// Code-split pages for faster initial load
+const Home = lazy(() => import("./pages/Home"));
+const About = lazy(() => import("./pages/About"));
+const Projects = lazy(() => import("./pages/Projects"));
+const Contact = lazy(() => import("./pages/Contact"));
 import cloudsVideo from "./assets/videos/sunclouds.mp4";
+import cloudsPoster from "./assets/images/room/theroom.png";
 import "./main.css";
 import CustomCursor from "./components/CustomCursor"; // ADD
 
@@ -81,12 +83,25 @@ export default function App() {
         loop
         muted
         playsInline
+        preload="metadata"
+        poster={cloudsPoster}
         className="background-video"
         src={cloudsVideo}
+        ref={(el) => {
+          // pause when tab hidden to save CPU/GPU
+          if (!el) return;
+          const onVis = () => {
+            if (document.hidden) el.pause();
+            else el.play().catch(() => {});
+          };
+          document.addEventListener("visibilitychange", onVis);
+          // invoke once
+          onVis();
+        }}
       />
       <Navbar onNavigate={setActivePage} />
       <div className="page-wrapper" style={{ minHeight: "100vh" }}>
-        {renderPage()}
+        <Suspense fallback={null}>{renderPage()}</Suspense>
       </div>
     </div>
   );

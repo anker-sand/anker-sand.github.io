@@ -236,6 +236,20 @@
   }
 }
 
+/* Performance overrides for low-end devices */
+:root.perf-low .scene-text.column-left {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+:root.perf-low .tv-float {
+  animation: none;
+}
+:root.perf-low .tv-screen::after,
+:root.perf-low .tv-screen:hover .tv-screen-img {
+  animation: none;
+}
+
 /* ============================== Text Layouts ============================== */
 .scene-text {
   position: absolute;
