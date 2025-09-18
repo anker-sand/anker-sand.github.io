@@ -14,6 +14,7 @@
   aspect-ratio: 16 / 9;
   bottom: 29%;
   will-change: transform; /* added for smoother rise */
+  contain: layout paint; /* reduce scope of repaints */
 }
 
 /* ADD VH MEDIA RULES FOR IPHONE/MOBILE in ROOM WRAPPER */
@@ -175,6 +176,18 @@
 
   text-shadow: 0 0.5px 0 rgba(0, 0, 0, 0.15);
   border: red 0px solid; /* debug */
+}
+
+/* Low-end device overrides set by index.html via :root.perf-low */
+:root.perf-low .room-wrapper {
+  will-change: auto;
+  contain: content;
+}
+:root.perf-low .cube-right-text {
+  transform: none !important; /* avoid heavy 3D transform on text */
+}
+:root.perf-low .cat-tail {
+  filter: none !important;
 }
 
 /* blinking caret at end of typed text */

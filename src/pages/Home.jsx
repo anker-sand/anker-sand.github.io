@@ -14,43 +14,53 @@ import cattail from "../assets/videos/cattail.webm";
 import InteractiveObject from "../components/Room/objects/InteractiveObject";
 import "./Home.css";
 import { motion } from "framer-motion"; // <-- added
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import meow from "../assets/audio/MEOW.wav";
 
-export default function Home({ onNavigate }) {
-  // Right wall text content and typewriter state (with pauses)
-  const wallText = `Welcome to my digital room, where i make my projects.\n\nMake yourself at home...`;
-  const [typedText, setTypedText] = useState("");
-
+function WallText({ text }) {
+  const [typed, setTyped] = useState("");
   useEffect(() => {
-    setTypedText("");
-    const chars = Array.from(wallText);
-    const BASE_MS = 45; // base speed (ms per char)
-    const NEWLINE_PAUSE_MS = 500; // pause BEFORE a newline
+    setTyped("");
+    const chars = Array.from(text);
+    const BASE_MS = 42;
+    const NEWLINE_PAUSE_MS = 380;
     let i = 0;
     let to;
-
-    const step = () => {
-      // Guard before appending to avoid adding "undefined"
+    const tick = () => {
       if (i >= chars.length) return;
-      const ch = chars[i] ?? "";
-      setTypedText((prev) => prev + ch);
-      i += 1;
-      if (i >= chars.length) {
-        // done; do not queue another timeout
-        to = undefined;
-        return;
+      // append 2 chars per frame to reduce re-renders
+      let chunk = "";
+      for (let c = 0; c < 2 && i < chars.length; c++) {
+        chunk += chars[i++] ?? "";
       }
+      setTyped((prev) => prev + chunk);
+      if (i >= chars.length) return;
       const next = chars[i];
       const delay = next === "\n" ? NEWLINE_PAUSE_MS : BASE_MS;
-      to = setTimeout(step, delay);
+      to = setTimeout(tick, delay);
     };
+    to = setTimeout(tick, 180);
+    return () => to && clearTimeout(to);
+  }, [text]);
+  return (
+    <motion.pre
+      className="cube-right-text"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3, ease: "easeOut", delay: 0.2 }}
+      aria-label="Welcome text on cube wall"
+    >
+      {typed}
+      <span className="caret" aria-hidden="true">
+        |
+      </span>
+    </motion.pre>
+  );
+}
 
-    to = setTimeout(step, 220);
-    return () => {
-      if (to) clearTimeout(to);
-    };
-  }, [wallText]);
+export default function Home({ onNavigate }) {
+  // Right wall text content (kept constant); rendering moved to memoized child to avoid whole-page rerenders
+  const wallText = `Welcome to my digital room, where i make my projects.\n\nMake yourself at home...`;
   // Click handler to play meow when audio is provided later
   const playMeow = () => {
     const el = document.getElementById("meow-audio");
@@ -72,22 +82,16 @@ export default function Home({ onNavigate }) {
           transition: { duration: 0.6, ease: "easeOut", delay: 0.15 },
         }}
       >
-        <img src={roomBase} className="room-base" />
-        <img src={desk} className="desk" />
+        <img
+          src={roomBase}
+          className="room-base"
+          alt="Room base"
+          decoding="async"
+        />
+        <img src={desk} className="desk" alt="Desk" decoding="async" />
 
         {/* Right wall intro text (typewriter each mount) */}
-        <motion.pre
-          className="cube-right-text"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3, ease: "easeOut", delay: 0.2 }}
-          aria-label="Welcome text on cube wall"
-        >
-          {typedText}
-          <span className="caret" aria-hidden="true">
-            |
-          </span>
-        </motion.pre>
+        <WallText text={wallText} />
 
         {/* Existing interactive objects */}
         <InteractiveObject
@@ -105,18 +109,16 @@ export default function Home({ onNavigate }) {
         />
 
         {/* NEW static decorative items */}
-        <img src={chair} className="chair" />
+        <img
+          src={chair}
+          className="chair"
+          alt="Chair"
+          loading="lazy"
+          decoding="async"
+        />
 
         {/* Cat tail video: transparent background, looped, placed above chair */}
-        <video
-          src={cattail}
-          className="cat-tail interactive-object"
-          autoPlay
-          loop
-          muted
-          playsInline
-          aria-label="Cat wagging tail"
-        />
+        <CatTail />
         {/* Hotspot for clicking meow without clipping the video */}
         <button
           className="cat-tail-hotspot interactive-object"
@@ -129,10 +131,34 @@ export default function Home({ onNavigate }) {
             "--cat-hot-height": "5.6%",
           }}
         />
-        <img src={doormat} className="doormat" />
-        <img src={plant} className="plant" />
-        <img src={bookcase} className="bookcase" />
-        <img src={rug} className="rug" />
+        <img
+          src={doormat}
+          className="doormat"
+          alt="Doormat"
+          loading="lazy"
+          decoding="async"
+        />
+        <img
+          src={plant}
+          className="plant"
+          alt="Plant"
+          loading="lazy"
+          decoding="async"
+        />
+        <img
+          src={bookcase}
+          className="bookcase"
+          alt="Bookcase"
+          loading="lazy"
+          decoding="async"
+        />
+        <img
+          src={rug}
+          className="rug"
+          alt="Rug"
+          loading="lazy"
+          decoding="async"
+        />
 
         {/* 3D text PNG (domain) */}
         <img
@@ -140,6 +166,7 @@ export default function Home({ onNavigate }) {
           alt="anker-sand.github.io"
           className="ankersandgithub"
           draggable="false"
+          decoding="async"
         />
 
         {/* Mail now interactive -> Contact page */}
@@ -150,10 +177,38 @@ export default function Home({ onNavigate }) {
           onClick={() => onNavigate("contact")}
         />
 
-        <img src={door} className="door" />
+        <img src={door} className="door" alt="Door" decoding="async" />
       </motion.div>
       {/* Hidden audio element (user will add source later) */}
       <audio id="meow-audio" src={meow} preload="auto" />
     </div>
+  );
+}
+
+function CatTail() {
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const onVis = () => {
+      if (document.hidden) el.pause();
+      else el.play().catch(() => {});
+    };
+    document.addEventListener("visibilitychange", onVis);
+    onVis();
+    return () => document.removeEventListener("visibilitychange", onVis);
+  }, []);
+  return (
+    <video
+      ref={ref}
+      src={cattail}
+      className="cat-tail interactive-object"
+      autoPlay
+      loop
+      muted
+      playsInline
+      preload="metadata"
+      aria-label="Cat wagging tail"
+    />
   );
 }
