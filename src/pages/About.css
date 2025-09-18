@@ -21,14 +21,18 @@
   --static-noise-contrast: 180%;
   --static-noise-brightness: 140%;
   --static-fade-in: 140ms; /* show on hover */
-  --static-fade-out: 180ms; /* hide after hover */
+  --static-fade-out: 780ms; /* hide after hover */
 
   /* ===== Scene text offsets (per layout) ===== */
-  --hero-left-top: 24vh;
-  --hero-left-left: 15vw;
+  --hero-left-top: 0vh;
+  --hero-left-left: 0vw;
 
-  --column-left-top: 25vh;
-  --column-left-left: 17vw;
+  /* Centered hero (scene 1) */
+  --hero-center-top: 0vh; /* adjust to move title up/down */
+  --hero-center-left-offset: -25%; /* +/- to nudge horizontally */
+
+  --column-left-top: 20vh;
+  --column-left-left: 11vw;
 
   --center-under-top: 52vh;
 
@@ -40,21 +44,25 @@
   --text-nudge-y: 0px;
 
   /* Widths */
-  --text-max-width: 55ch;
+  --text-max-width: 79ch;
   --text-max-width-center: 60ch;
 
   /* ===== Typography / colors ===== */
-  --font-stack-body: "Inter", system-ui, sans-serif;
+  --font-stack-body: "montserrat", system-ui, sans-serif;
   --font-stack-mono: jetbrains-mono, ui-monospace, monospace;
 
-  --color-body: #ffffff;
-  --color-body-strong: #ffffff;
-  --color-accent: #ffffff;
+  --color-body: #f2e6d2;
+  --color-body-strong: #f2e6d2;
+  --color-accent: #ecb858;
 
   --hero-title-size: clamp(3.2rem, 9vw, 7rem);
   --section-heading-size: clamp(1.7rem, 3.1vw, 4rem);
   --talk-heading-size: clamp(2.4rem, 4.3vw, 3.6rem);
   --cta-font-size: clamp(1rem, 1.4vw, 1.35rem);
+  /* Hero CTA positioning */
+  --hero-cta-gap: 12px; /* space between title and CTA */
+  --hero-cta-offset-x: -20%; /* nudge CTA left/right (e.g., -2vw or 24px) */
+  --hero-cta-offset-y: 0px; /* nudge CTA up/down */
 
   --ease-smooth: cubic-bezier(0.4, 0.18, 0.2, 1);
 
@@ -238,11 +246,6 @@
   -webkit-font-smoothing: antialiased;
 }
 
-.hero-left {
-  top: calc(var(--hero-left-top) + var(--text-nudge-y));
-  left: calc(var(--hero-left-left) + var(--text-nudge-x));
-}
-
 .column-left {
   top: calc(var(--column-left-top) + var(--text-nudge-y));
   left: calc(var(--column-left-left) + var(--text-nudge-x));
@@ -254,20 +257,59 @@
   max-width: var(--text-max-width-center);
 }
 
+/* New centered hero layout for scene 1 */
+.hero-center {
+  top: calc(var(--hero-center-top) + var(--text-nudge-y));
+  left: calc(50% + var(--hero-center-left-offset));
+  transform: translateX(-50%);
+  text-align: center;
+  max-width: var(--text-max-width-center);
+}
+
 .talk-left {
   top: calc(var(--talk-left-top) + var(--text-nudge-y));
   left: calc(var(--talk-left-left) + var(--text-nudge-x));
 }
 
 /* ========================= Typography & Components ======================== */
+/* Scene 2 panel: apply to the scene container so it envelops the title + text */
+.scene-text.column-left {
+  /* Use theme vars if present */
+  background: var(--callout-bg, rgba(0, 0, 0, 0.48));
+  border: 1px solid var(--callout-border, rgba(255, 255, 255, 0.12));
+  border-radius: 12px;
+  padding: 16px 18px 18px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  display: inline-block; /* ensure the panel hugs content width */
+  overflow: hidden; /* clip rounded corners */
+  box-sizing: border-box;
+  /* Adjust the panel width here: set a specific width or cap with max-width */
+  /*max-width: var(--scene2-panel-width, var(--text-max-width));
+  /* If you prefer a fixed width, uncomment the next line and set the variable
+     width: var(--scene2-panel-width, 55ch); */
+}
+
+/* Avoid double-framing the inner block */
+.scene-text.column-left .about-dev {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  padding: 0 !important;
+}
 .hero-title {
-  margin: 0 0 28px;
-  font-size: var(--hero-title-size);
+  margin: 0 0 12px;
+  font-size: 180px;
   line-height: 0.92;
-  font-family: roboto-mono, ui-monospace, monospace;
-  font-weight: 600;
+  font-family: jetbrains-mono, ui-monospace, monospace;
+  font-weight: 200;
   letter-spacing: 1px;
-  color: #d5e7d8;
+  color: #f2e6d2;
+  /* subtle contrast to read over video/sky */
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25), 0 2px 12px rgba(0, 0, 0, 0.15);
 
   /* New: stronger separation and balanced wrapping */
   position: relative;
@@ -275,7 +317,7 @@
   padding: 6px 10px; /* room for scrim */
   text-wrap: balance; /* nicer multi-line breaks */
 
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.55), 0 0 2px rgba(0, 0, 0, 0.85);
+  /*text-shadow: 0 2px 6px rgba(0, 0, 0, 0.55), 0 0 2px rgba(0, 0, 0, 0.85);
 
   border: none; /* remove debug */
 }
@@ -294,6 +336,11 @@
   align-items: center;
   transition: color 0.3s var(--ease-smooth);
   color: var(--color-body);
+  /* independent positioning from the title */
+  margin-top: var(--hero-cta-gap);
+  position: relative;
+  left: var(--hero-cta-offset-x);
+  top: var(--hero-cta-offset-y);
 }
 .hero-cta-arrow {
   transition: transform 0.4s var(--ease-smooth);
@@ -303,6 +350,13 @@
 }
 .hero-cta:hover .hero-cta-arrow {
   transform: translateY(5px);
+}
+
+/* Scene 2: subtle scrim behind the title for legibility */
+.scene-text.column-left .hero-title {
+  background: var(--hero-title-scrim, rgba(0, 0, 0, 0.28));
+  border-radius: 8px;
+  padding: 8px 12px; /* a touch more padding to breathe */
 }
 
 .text-block {
@@ -387,40 +441,62 @@
 }
 
 /* =============================== Navigation =============================== */
-.about-nav {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 40;
-}
-.about-nav-top {
-  top: 6px;
-}
-.about-nav-bottom {
-  bottom: 12px;
-}
-.about-nav button {
-  background: none;
-  border: none;
-  font-size: 26px;
-  line-height: 1;
-  font-weight: 700;
-  cursor: pointer;
+/* Old arrow navigation removed */
+
+/* ======================= Left Scroll Indicator ======================= */
+.scroll-indicator-left {
+  position: fixed;
+  left: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
   color: var(--color-body-strong);
-  padding: 4px 8px;
-  transition: transform 0.25s ease, opacity 0.25s ease;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  pointer-events: none; /* informational only */
 }
-.about-nav-top button:hover:not(:disabled) {
-  transform: translateY(-3px);
+.scroll-indicator-left .scroll-line {
+  width: 4px;
+  height: 120px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.18);
+  overflow: hidden;
+  position: relative;
 }
-.about-nav-bottom button:hover:not(:disabled) {
-  transform: translateY(3px);
+.scroll-indicator-left .scroll-dot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 3px;
+  animation: scrollDot 1.8s var(--ease-smooth) infinite;
 }
-.about-nav button:disabled {
-  opacity: 0.25;
-  cursor: default;
-  transform: none;
+.scroll-indicator-left .scroll-label {
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+@keyframes scrollDot {
+  0% {
+    transform: translateY(-24px);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  80% {
+    transform: translateY(120px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(120px);
+    opacity: 0;
+  }
 }
 
 /* =============================== Responsive ============================== */
@@ -437,8 +513,9 @@
   .tv-wrapper {
     width: clamp(340px, 58vw, 640px);
   }
-  .hero-left {
-    top: 18vh;
+  /* center hero tweak on mobile */
+  .about-page {
+    --hero-center-top: 34vh;
   }
   .column-left {
     top: 24vh;

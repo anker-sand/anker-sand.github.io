@@ -15,15 +15,14 @@ import scene4 from "../assets/images/about/scene4.png";
 const SCENES = [
   {
     id: 1,
-    tv: { left: "54vw", top: "17vh", scale: 2.2 },
-    layout: "hero-left",
+    tv: { left: "31.5vw", top: "43vh", scale: 0.8 },
+    layout: "hero-center",
     screenSrc: scene1,
     content: (
       <>
         <h1 className="hero-title">
-          Hello,
           <br />
-          i'm a web developer
+          I'm a web developer
         </h1>
         <button className="hero-cta" data-next>
           About me <span className="hero-cta-arrow">▼</span>
@@ -33,7 +32,7 @@ const SCENES = [
   },
   {
     id: 2,
-    tv: { left: "52vw", top: "20vh", scale: 2.25 },
+    tv: { left: "55vw", top: "20vh", scale: 1.75 },
     layout: "column-left",
     screenSrc: scene2,
     content: (
@@ -43,10 +42,11 @@ const SCENES = [
           My name is Anker, a 25-year-old frontend developer from Denmark with a
           passion for design, code, visual identity and interactive experiences.
           <br />
-          <br /> I enjoy pushing creative boundaries and exploring new ways to
-          bring ideas to life. At the same time, I strive to keep my work
-          intuitive and purposeful—always putting users and project goals at the
-          center of the process.
+          <br /> I enjoy pushing boundaries and exploring new ways to bring
+          ideas to life. <br />
+          <br /> At the same time, I strive to keep my work intuitive and
+          purposeful—always putting users and project goals at the center of the
+          process.
         </p>
         <p className="callout">
           For me, web design should spark curiosity and invite interaction.
@@ -267,25 +267,15 @@ export default function About() {
         </motion.div>
       </AnimatePresence>
 
-      {/* Navigation buttons (still available) */}
-      <div className="about-nav about-nav-top">
-        <button
-          aria-label="Previous section"
-          onClick={prev}
-          disabled={index === 0}
-        >
-          ▲
-        </button>
-      </div>
-      <div className="about-nav about-nav-bottom">
-        <button
-          aria-label="Next section"
-          onClick={next}
-          disabled={index === SCENE_COUNT - 1}
-        >
-          ▼
-        </button>
-      </div>
+      {/* Left-side scroll indicator: visible for all scenes except last */}
+      {index !== SCENE_COUNT - 1 && (
+        <div className="scroll-indicator-left" aria-hidden="true">
+          <div className="scroll-line">
+            <span className="scroll-dot" />
+          </div>
+          <span className="scroll-label">Scroll</span>
+        </div>
+      )}
     </div>
   );
 }

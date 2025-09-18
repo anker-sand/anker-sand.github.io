@@ -33,8 +33,6 @@ export default function Contact() {
       <div className="contact-inner">
         <h1 className="contact-title">Let’s Talk!</h1>
         <p className="contact-lead">
-          Are you looking for a curious and creative intern to join your team?{" "}
-          <br />
           I’d love to hear from you — whether it’s about a project, a
           collaboration, or just a quick hello.
         </p>
@@ -43,6 +41,7 @@ export default function Contact() {
           <a className="contact-mail-link" href={`mailto:${EMAIL}`}>
             {EMAIL}
           </a>{" "}
+          <br />
           or use the form below.
         </p>
 

@@ -13,7 +13,7 @@
 .nav-icon {
   width: clamp(40px, 5vw, 70px);
   height: clamp(40px, 5vw, 70px);
-  color: rgb(241, 182, 54);
+  color: #c4a7a7;
   cursor: none !important; /* custom cursor */
   transition: transform 0.18s ease;
 }
@@ -38,7 +38,7 @@
 
 .nav-menu button {
   background: none;
-  color: rgb(236, 168, 21);
+  color: #e7e0f7;
   border: none;
   cursor: pointer;
   font-size: 2rem; /* smaller for horizontal layout */
@@ -52,6 +52,6 @@
 }
 
 .nav-menu button:hover {
-  color: #be8f5c;
+  color: #c4a7a7;
   transform: translateY(-3px);
 }

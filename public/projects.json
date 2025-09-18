@@ -15,9 +15,9 @@
 
   {
     "id": "Zero-buzz",
-    "title": "Zero Buzz",
+    "title": "Zero Buzz Brew",
     "subtitle": "Non alcoholic beer",
-    "description": "branding and website for a fictional non-alcoholic beer. The project included designing the beer can, creating a logo, and developing a website to promote the product.",
+    "description": "Branding and website for a fictional non-alcoholic beer. The project included designing the beer can, creating a logo, and developing a website to promote the product.",
     "credits": "Handdrawn animation, Custom beer designer, branding, webdesign, infographic, ",
     "url": "https://anker-sand.github.io/Zero_buzz_projekt/",
     "images": [
@@ -31,7 +31,7 @@
     "id": "radar_live",
     "title": "Radar live",
     "subtitle": "Redesigning a concert venue",
-    "description": "A parallax scrolling site for the concert venue radar live in Aarhus, Denmark.",
+    "description": "A parallax scrolling site re-design, for the concert venue radar live in Aarhus. The design is mobile responsive.",
     "credits": "Parallax scroll, mobile responsive",
     "url": "https://anker-sand.github.io/RADAR/",
     "images": [
@@ -44,7 +44,7 @@
     "id": "signal",
     "title": "Signal",
     "subtitle": "fun little game",
-    "description": "A very small game made in just a few days, for a school project. It has a fun little audio / visual puzzle, Mostly I am happy with the intro theme song I made for the game.",
+    "description": "A very small game made in just a few days, for a school project. It has a fun little audio + visual puzzle. And an original soundtrack, made with ableon live.",
     "credits": "sound design, click adventure, puzzle",
     "url": "https://anker-sand.github.io/Signal_game_project/",
     "images": [

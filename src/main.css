@@ -12,8 +12,8 @@ html,
   color: #f5f5f5;
 
   /* Background video tuning */
-  --bg-video-brightness: 0.97; /* lower = darker */
-  --bg-video-saturate: 1;
+  --bg-video-brightness: 0.77; /* lower = darker */
+  --bg-video-saturate: 0.8;
   --bg-video-contrast: 1; /* tweak if needed */
 }
 
