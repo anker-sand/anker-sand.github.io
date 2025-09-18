@@ -360,34 +360,7 @@ export default function Projects() {
                       </p>
                     )}
 
-                    {activeProject.description && (
-                      <div className="depth-layer depth-desc">
-                        <motion.p
-                          className="cube-desc"
-                          variants={descVariants}
-                          initial="initial"
-                          animate="animate"
-                          exit="exit"
-                        >
-                          {activeProject.description}
-                        </motion.p>
-                      </div>
-                    )}
-
-                    {activeProject.credits && (
-                      <div className="depth-layer depth-credits">
-                        <motion.p
-                          className="cube-credits"
-                          variants={descVariants}
-                          initial="initial"
-                          animate="animate"
-                          exit="exit"
-                        >
-                          {activeProject.credits}
-                        </motion.p>
-                      </div>
-                    )}
-
+                    {/* Showcase moved directly under subtitle */}
                     <AnimatePresence mode="wait">
                       {showInlineShowcase && total > 0 && (
                         <div className="depth-layer depth-showcase">
@@ -442,6 +415,34 @@ export default function Projects() {
                         </div>
                       )}
                     </AnimatePresence>
+
+                    {activeProject.description && (
+                      <div className="depth-layer depth-desc">
+                        <motion.p
+                          className="cube-desc"
+                          variants={descVariants}
+                          initial="initial"
+                          animate="animate"
+                          exit="exit"
+                        >
+                          {activeProject.description}
+                        </motion.p>
+                      </div>
+                    )}
+
+                    {activeProject.credits && (
+                      <div className="depth-layer depth-credits">
+                        <motion.p
+                          className="cube-credits"
+                          variants={descVariants}
+                          initial="initial"
+                          animate="animate"
+                          exit="exit"
+                        >
+                          {activeProject.credits}
+                        </motion.p>
+                      </div>
+                    )}
                   </motion.div>
                 )}
               </AnimatePresence>

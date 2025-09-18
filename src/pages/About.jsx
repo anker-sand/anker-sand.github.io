@@ -3,9 +3,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import "./About.css";
 import AngelTVWebm from "../assets/videos/AngelTV.webm";
 
-import scene1 from "../assets/images/about/scene1.png";
-import scene2 from "../assets/images/about/scene2.png";
-import scene3 from "../assets/images/about/scene3.png";
+import scene1 from "../assets/images/about/bib2.jpg";
+import scene2 from "../assets/images/about/bib1.jpg";
+import scene3 from "../assets/images/about/studiosesh.jpg";
 import scene4 from "../assets/images/about/scene4.png";
 
 /*
@@ -15,7 +15,7 @@ import scene4 from "../assets/images/about/scene4.png";
 const SCENES = [
   {
     id: 1,
-    tv: { left: "54vw", top: "17vh", scale: 1.2 },
+    tv: { left: "54vw", top: "17vh", scale: 2.2 },
     layout: "hero-left",
     screenSrc: scene1,
     content: (
@@ -33,7 +33,7 @@ const SCENES = [
   },
   {
     id: 2,
-    tv: { left: "52vw", top: "20vh", scale: 1.55 },
+    tv: { left: "52vw", top: "20vh", scale: 2.25 },
     layout: "column-left",
     screenSrc: scene2,
     content: (
@@ -56,7 +56,7 @@ const SCENES = [
           <li>JavaScript (ESNext)</li>
           <li>HTML / CSS</li>
           <li>Figma</li>
-          <li>Adobe suite</li>
+          <li>Adobe Creative Suite</li>
           <li>Procreate</li>
           <li>Ableton Live</li>
         </ul>
@@ -65,30 +65,24 @@ const SCENES = [
   },
   {
     id: 3,
-    tv: { left: "33vw", top: "10vh", scale: 1.5 },
+    tv: { left: "31.5vw", top: "0vh", scale: 1.3 },
     layout: "center-under",
     screenSrc: scene3,
     content: (
       <div className="text-block center">
         <p>
-          Outside of coding, I’ve spent many hours producing music and playing
-          instruments. Creating my own little musical worlds taught me attention
-          to detail and how fine-tuned elements shape the experience
+          Outside of coding, I’ve spent countless hours producing music and
+          playing instruments. Both for myself, and in collaboration with
+          others. <br /> <br />
+          The process of creating music, is all about experimenting, refining,
+          and building on ideas.
         </p>
         <p>
-          in the end it’s how everything comes together that truly matters. - I
-          carry that same mindset into web development
+          That same creative approach guides the way I tackle challenges in web
+          development.
         </p>
 
-        <p>
-          {" "}
-          <p>
-            For me, web design can also be digital worlds that people step into
-            and explore. <br />
-            But although I always have many ideas, my focus lies within the
-            context of the users, the client, and the project goals.
-          </p>
-        </p>
+        <p> </p>
       </div>
     ),
   },

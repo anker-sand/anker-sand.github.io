@@ -38,7 +38,7 @@
 /* ---------- LEFT LIST ---------- */
 /* Remove giant top margin; spacing handled by container padding */
 .proj-title {
-  margin: 0 0 32px 20%;
+  margin: 0 0 32px 30%;
   font-size: clamp(64px, 8vw, 140px);
   line-height: 1;
   color: #d6ae56;
@@ -51,7 +51,7 @@
 }
 
 .proj-list {
-  margin-left: 20%;
+  margin-left: 32%;
   background: rgba(40, 40, 50, 0.32);
   backdrop-filter: blur(5px) saturate(1.2);
   -webkit-backdrop-filter: blur(8px) saturate(1.2);
@@ -188,11 +188,11 @@
   position: relative;
   width: 500px;
   height: auto;
-  margin-left: 90px;
+  margin-left: 50px;
 }
 
 .cube-image {
-  width: 142%;
+  width: 145%;
   height: auto;
   display: block;
 }
@@ -220,43 +220,48 @@
   transform-style: preserve-3d;
   position: relative;
   will-change: transform;
+  z-index: 1; /* baseline so DOM order doesn't cover showcase */
 }
 
 /* Remove previous contact shadow & hover effects (none added) */
 
 /* Individual transforms */
 .depth-title {
-  transform: translateZ(var(--z-title)) rotateY(var(--depth-tilt-y))
-    rotateX(var(--depth-tilt-x)) skewY(var(--depth-skew));
+  transform: translateZ(var(--z-showcase))
+    rotateY(calc(var(--depth-tilt-y) * 0.85))
+    rotateX(calc(var(--depth-tilt-x) * 0.85))
+    skewY(calc(var(--depth-skew) * 1.15)) scale(1.1);
 }
 
 .depth-sub {
   transform: translateZ(var(--z-showcase))
     rotateY(calc(var(--depth-tilt-y) * 0.85))
-    rotateX(calc(var(--depth-tilt-x) * 0.85)) skewY(calc(var(--depth-skew) * 1))
-    scale(0.96);
+    rotateX(calc(var(--depth-tilt-x) * 0.85))
+    skewY(calc(var(--depth-skew) * 1.15)) scale(1.1);
 }
 
 .depth-desc {
   transform: translateZ(var(--z-showcase))
     rotateY(calc(var(--depth-tilt-y) * 0.85))
     rotateX(calc(var(--depth-tilt-x) * 0.85))
-    skewY(calc(var(--depth-skew) * 1.1)) scale(0.96);
+    skewY(calc(var(--depth-skew) * 1.15)) scale(1.1);
 }
 
 .depth-credits {
   transform: translateZ(var(--z-showcase))
     rotateY(calc(var(--depth-tilt-y) * 0.85))
     rotateX(calc(var(--depth-tilt-x) * 0.85))
-    skewY(calc(var(--depth-skew) * 1.15)) scale(0.96);
+    skewY(calc(var(--depth-skew) * 1.15)) scale(1.1);
 }
 
 .depth-showcase {
   transform: translateZ(var(--z-showcase))
-    rotateY(calc(var(--depth-tilt-y) * 0.5))
-    rotateX(calc(var(--depth-tilt-x) * 0.5))
-    skewY(calc(var(--depth-skew) * 1.2)) scale(0.925);
+    rotateY(calc(var(--depth-tilt-y) * 0.85))
+    rotateX(calc(var(--depth-tilt-x) * 0.85))
+    skewY(calc(var(--depth-skew) * 1.15)) scale(1.1);
   transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1);
+  border: red 0px solid; /* debug */
+  z-index: 5; /* sit above text by default */
 }
 
 /* (Showcase hover may stay subtle; remove scale lift) */
@@ -265,6 +270,7 @@
     rotateY(calc(var(--depth-tilt-y) * 1.1))
     rotateX(calc(var(--depth-tilt-x) * 1.05))
     skewY(calc(var(--depth-skew) * 0.6)) scale(1.485);
+  z-index: 999; /* ensure it overlays all text when enlarged */
 }
 
 /* Typography */
@@ -276,7 +282,7 @@
   font-weight: 600;
   letter-spacing: 0.5px;
   color: var(--color-title);
-  max-width: 40ch;
+  width: 100%;
 }
 
 .cube-sub {
@@ -287,19 +293,22 @@
   font-family: var(--font-sans);
   font-weight: 600;
   color: #6d391b;
+  width: 100%;
 }
 
 .cube-desc,
 .cube-credits {
   font-size: 20px;
-  line-height: 1.45;
-  margin: 0 0 10px 0;
+  line-height: 1.4;
+  margin: 45px 0 20px 0;
   font-family: var(--font-sans);
   color: #422f24;
   font-weight: 400;
   letter-spacing: 0.15px;
   -webkit-font-smoothing: antialiased;
   white-space: normal;
+  border: red 0px solid; /* debug */
+  width: 100%;
 }
 
 .cube-credits {
@@ -348,12 +357,12 @@
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
-  margin-top: 30px;
+  margin-top: 20px;
   border-radius: 8px;
   overflow: hidden;
   cursor: pointer;
   background: #181a1f;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.35);
   isolation: isolate;
 }
 
