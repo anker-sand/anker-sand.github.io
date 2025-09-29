@@ -65,7 +65,7 @@ const SCENES = [
   },
   {
     id: 3,
-    tv: { left: "31.5vw", top: "0vh", scale: 1.3 },
+    tv: { left: "31.5vw", top: "0vh", scale: 1.7 },
     layout: "center-under",
     screenSrc: scene3,
     content: (
