@@ -31,7 +31,7 @@
     "id": "Matrix-tool",
     "title": "3D Matrix Tool",
     "subtitle": "Web development tool",
-    "description": "A tool for approximating 3D matrix values of a plane by dragging the corners of a polygon over an image. The polygon’s shape is used to calculate the matrix values, which are then generated as ready-to-use CSS. I built this as a personal challenge after running into this exact problem — and now it’s a neat little solution for this oddly specific need. Features neat keybinds",
+    "description": "A tool for approximating 3D matrix values of a plane by dragging the corners of a polygon to fit over an image. The polygon’s shape is used to calculate the matrix values, which are then generated as ready-to-use CSS. I built this as a personal challenge after running into this exact problem — and now it’s a neat little solution for this oddly specific need. Features neat keybinds",
     "credits": "Web development, CSS, JavaScript",
     "url": "https://anker-sand.github.io/3dcsstool/",
     "images": [
