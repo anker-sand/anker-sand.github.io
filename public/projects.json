@@ -28,6 +28,20 @@
   },
 
   {
+    "id": "Matrix-tool",
+    "title": "Matrix Value CSS tool",
+    "subtitle": "Web development tool",
+    "description": "a tool i made for approximating the 3D matrix values of any given plane, by dragging corners of a polygon to fit on top of an image.",
+    "credits": "Web development, CSS, JavaScript",
+    "url": "https://anker-sand.github.io/3dcsstool/",
+    "images": [
+      "/assets/projects/3dcsstool/3dcsstool_1.png",
+      "/assets/projects/3dcsstool/3dcsstool_2.png",
+      "/assets/projects/3dcsstool/3dcsstool_3.png"
+    ]
+  },
+
+  {
     "id": "radar_live",
     "title": "Radar live",
     "subtitle": "Redesigning a concert venue",
