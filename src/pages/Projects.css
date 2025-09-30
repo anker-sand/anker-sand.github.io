@@ -251,9 +251,9 @@
 
 .cube {
   position: relative;
-  width: 500px;
+  width: 550px;
   height: auto;
-  margin-left: 50px;
+  margin-left: 0px;
 }
 
 .cube-image {
