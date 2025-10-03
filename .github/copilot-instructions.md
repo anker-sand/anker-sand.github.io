@@ -18,8 +18,8 @@ Concise guidance for AI coding agents working on this Vite + React (JSX) single-
 ### 3) Animations & interactions
 
 - `framer-motion` is used locally (not for global page fades). Examples:
-	- `components/Navbar/Navbar.jsx`: hover-revealed menu with `AnimatePresence`.
-	- `pages/Projects.jsx`: cube entrance, per-word title/subtitle animation, image showcase crossfades, and a resolution modal.
+  - `components/Navbar/Navbar.jsx`: hover-revealed menu with `AnimatePresence`.
+  - `pages/Projects.jsx`: cube entrance, per-word title/subtitle animation, image showcase crossfades, and a resolution modal.
 - Keep transitions brief (< ~0.6s) to avoid lag. Prefer a single parent motion container per region to reduce layout thrash.
 - `components/Room/objects/InteractiveObject.jsx` provides hover tooltips using `position: fixed` based on mouse events; avoid wrappers that block pointer events.
 
